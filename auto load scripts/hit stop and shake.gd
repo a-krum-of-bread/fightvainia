@@ -24,4 +24,4 @@ func _process(_delta):
 	elif frames_left == 0: 
 		frames_left -= 1 
 		get_tree().paused = false
-		cam.offset =Vector2.ZERO
+		cam.offset = Vector2.ZERO

@@ -26,8 +26,7 @@ var direction_look_up_array = [
 
 #TODO add a boolen to tell me when i can do somthing
 #both Array[Array]s need a bit to not cause erroron start elsewher in code
-# FIXME refactor input history is a global varable remove it a few time from 
-#FIXME function calls speicifly sequence reader
+
 var input_history: Array[Array] = [[5],[5]] ## holds the full input history up to [member max_check_frames]
 var buffered_array: Array[Array] = [[5],[5]]## holds the buffer input history up to [member max_buffer_frames]
 var inputs_of_curent_frame: Array[int] ## the single frame of input that is used in [members input_history] and [member buffered_array]
@@ -43,7 +42,7 @@ var jump_relesed: bool= false
 # combining player script with input manager
 @export_group("player info")
 @export var player: Player ## the player host see [Player]
-@export var attack_manager: AttackManger ##see [AttackManger]
+@export var attack_manager: AttackManager ##see [AttackManger]
 @export var coyote_timer: FrameTimer ## a timer to check if we can still jump without it being considerd in air see [TimerComponet]
 @export var c_timer_length: int = 6 # same as .1 seconds
 var can_c_jump: bool = false# can coyote jump
@@ -51,9 +50,7 @@ var can_c_jump: bool = false# can coyote jump
 @export var scale_component: Scale ## see [Scale] 
 @export var dash_component: Dash ## see [Dash]
 @export var gravity_component: Gravity
-# TODO move the 2 expeot vars below to movnment componet 
-@export var jump_velocityY: float = -300 #controls hight
-@export var move_speed: float = 100 #contols walk speed
+
 
 #becuse my key board is broken use lp to use the boolens
 @export_category("fake inputs")
@@ -69,9 +66,6 @@ func _ready():
 	self.name= "input_manager"
 	super._ready()
 
-
-
-	
 ## used to alow for false butions because keybard is bad as many butions at the same time 
 ## waring this has relse sp if a bution is held and this is called the buttion is relsed 
 func press():
@@ -94,33 +88,7 @@ func flip_x_logic():
 		elif player.is_on_floor() and input_direction == 1:
 			scale_component.set_scale(Vector2(1,1))
 #-------------------------------------------------------------start of movemnt handling 
-## contols logic for what type of jump it is (grounded, coyote or air) and if they can still jump
-#func jump_handler():
-	#var jump_ = Input.is_action_just_pressed("jump") or Input.is_action_pressed("up")
-	## ground jump 
-	#if player.is_on_floor() and movement_componet.is_jumping == false:
-		#can_air_action_jump = true
-		#coyote_timer.expired = false
-		#if jump_:
-			#movement_componet.jump(Vector2(move_speed*input_direction,jump_velocityY)) 
-			#coyote_timer.expired = true
-	##coyote jump
-	#elif coyote_timer.expired == false:
-		#if coyote_timer.is_stopped():
-			#coyote_timer.start(c_timer_length)
-		#if jump_:
-			#movement_componet.jump(Vector2(move_speed*input_direction,jump_velocityY)) 
-			#coyote_timer.expired = true
-	## air jump
-	#elif can_air_action_jump and jump_:
-		#movement_componet.jump(Vector2(move_speed*input_direction,jump_velocityY)) 
-		#can_air_action_jump = false
 
-# 2 cases for jumping: when frame by frame mode is actictive use space bar / 
-#Input.is_action_pressed("jump") other witch will use both jumps imediatly 
-#if pressed for more than 1 frame and one for up is pressed so that it is 
-#read as true for a single frame
-#FIXME refactor the vars move speed and jump velcityY  
 func jump_handler2():
 	#bit of set up 
 	if player.is_on_floor() and movement_componet.is_jumping == false: 
@@ -131,14 +99,14 @@ func jump_handler2():
 		gravity_component.is_falling = true
 		dash_component.is_dashing = false
 		
-	if ((checks_for_Attacks(buffered_array,U,U)
-		or checks_for_Attacks(buffered_array,UR,UR)
-		or checks_for_Attacks(buffered_array,UL,UL))
+	if ((buffer_check(buffered_array,U,U)
+		or buffer_check(buffered_array,UR,UR)
+		or buffer_check(buffered_array,UL,UL))
 		or Input.is_action_pressed("jump")):
 		#ground 
 		if player.is_on_floor() and movement_componet.is_jumping == false:
 			can_air_action_jump = true
-			movement_componet.jump(Vector2(move_speed*input_direction,jump_velocityY))
+			movement_componet.jump(input_direction)
 			coyote_timer.frames_left = 0
 			print("g")
 		
@@ -148,7 +116,7 @@ func jump_handler2():
 		and can_c_jump 
 		and (Input.is_action_just_pressed("up") or Input.is_action_pressed("jump"))): 
 			coyote_timer.frames_left = 0
-			movement_componet.jump(Vector2(move_speed*input_direction,jump_velocityY))
+			movement_componet.jump(input_direction)
 			print("c")
 		
 		#air jump
@@ -156,32 +124,9 @@ func jump_handler2():
 		 and movement_componet.is_jumping == false
 		 and (Input.is_action_just_pressed("up") or Input.is_action_pressed("jump"))):
 			can_air_action_jump = false
-			movement_componet.jump(Vector2(move_speed*input_direction,jump_velocityY))
+			movement_componet.jump(input_direction)
 			print("a")
 		
-
-#func dash_handler():
-	#if dash_component.is_dashing:
-		#gravity_component.is_falling = false
-	#else: gravity_component.is_falling = true
-	#
-	#if player.is_on_floor(): can_air_action_dash = true
-	#if not dash_component.is_dashing:
-		#if (checks_for_Attacks(input_history, DASHR,R)
-		#and dash_component.is_dashing == false 
-		#and (player.is_on_floor() or can_air_action_dash)):
-			#dash_component.dash(Vector2.RIGHT)
-			#dash_component.is_dashing = true
-		#elif (checks_for_Attacks(input_history, DASHL,L)
-		#and dash_component.is_dashing == false 
-		#and (player.is_on_floor() or can_air_action_dash)):
-			#dash_component.dash(Vector2.LEFT)
-			#dash_component.is_dashing = true
-	##slight ground dash
-	#elif not in_nested_array(buffered_array,R) and player.is_on_floor():
-		#dash_component.is_dashing = false
-	#elif not in_nested_array(buffered_array,L) and player.is_on_floor():
-		#dash_component.is_dashing = false
 
 func dash_handler2():
 	#soem set up 
@@ -190,7 +135,7 @@ func dash_handler2():
 	else: gravity_component.is_falling = true
 	if player.is_on_floor(): can_air_action_dash = true
 	
-	if (checks_for_Attacks(input_history, DASHR,R)
+	if (buffer_check(input_history, DASHR,R)
 		and dash_component.is_dashing == false):
 		if player.is_on_floor():
 			print("ground dash")
@@ -201,7 +146,7 @@ func dash_handler2():
 			dash_component.is_dashing = true
 			can_air_action_dash = false
 
-	elif (checks_for_Attacks(input_history, DASHL,L)
+	elif (buffer_check(input_history, DASHL,L)
 		and dash_component.is_dashing == false):
 		if player.is_on_floor():
 			print("ground dash")
@@ -223,53 +168,56 @@ func movement_manager():
 
 #--------------------------------------------------------------end of movemnt hadling 
 #--------------------------------------------------------------start of array managent 
-#FIXME refactor make this nicer to under stand 
-## breaks the sequneces into usable parts for the other method
-func seqcence_reader(inputs_h: Array[Array], check: int) -> Array[int]:
-	inputs_h.reverse() #this here to read form the most recent side of the array
-	var digits:Array[int]
-	var num = check
-	var count: int = 0
-	var curent_index: = 0
-	var last_index: = -1
-	# tells us size of the seqcunce to check 
-	count = str(check).length()
-	# this while splits the check to be used in an easey to work with array 
-	# TODO try with just int?
-	while (num):
-		digits.push_back(num%10)
+#this doent implie dash can work how i want
+func buffer_check(input_h: Array, sequence: int, Attack_buttion: int) -> bool:
+	if get_vaild_sequences(input_h,sequence).size() > 0 and single_input_check(buffered_array,Attack_buttion):
+		return true
+	return false
+
+## checks if there is a matcing value in the provided array this is uded to buffer things 
+func single_input_check(array: Array, what: int)-> bool:
+	if array == null: return false #TODO check if this is a good idea 
+	for inputs in array:
+		if inputs.has(what):
+			return true
+	return false
+
+##spilts a sequnce into indicaul digits to be used by otehr functions
+func sequence_spliter(sequence: int) -> Array[int]:
+	var digits: Array[int]
+	while (sequence):
+		digits.push_front(sequence%10)
 		@warning_ignore("integer_division")# that is intedned 
-		num = num / 10
-	
-	# the check happens here
-	var in_sequence_count: int = 0
-	for inputs in inputs_h:
-		curent_index+=1
-		for input in inputs:
-			if input == digits.get(in_sequence_count): 
-				last_index = curent_index
-				in_sequence_count += 1
-				break # next frame if true
-		if in_sequence_count == count:
-			inputs_h.reverse()
-			return [check,last_index]
-	inputs_h.reverse()
-	return [0,-1] # default return 
+		sequence = sequence / 10
+	return digits
+
+## retuns the index of the sequnce if its vaild
+func get_vaild_sequences(input_h: Array[Array], sequence: int) -> Dictionary[int, int]:
+	var valid: Dictionary[int,int]
+	var curent_index: int = 0
+	var curent_digit: int = 0
+	var digits: Array[int] = sequence_spliter(sequence)
+	var total_digits: int = digits.size()
+	digits.reverse()
+	for inputs in input_h:
+		curent_index += 1
+		if inputs.has(digits.get(curent_digit)):# check if an input is vaild for that sqeuence 
+			curent_digit += 1
+			if curent_digit == total_digits:
+				valid.get_or_add(curent_index,sequence)
+				curent_index = 0
+				curent_digit = 0
+			else: pass
+	return valid
 
 ## cuts array size to the max that was decided and appends the newest frame of info 
 func resize_and_append_to_array(array: Array, max_size: int, this_frame_inputs: Array[int]):
 	if array.size() >= max_size:
-		array.remove_at(0)
+		array.remove_at(-1) # last index
+		
 		#add the new input the end
-	array.append(this_frame_inputs.duplicate())
-
-## checks if there is a matcing value in the provided array this is uded to buffer things 
-func in_nested_array(array: Array, what: int)-> bool:
-	if array == null: return false #TODO check if this is a good idea 
-	for i in array:
-		if i.has(what):
-			return true
-	return false
+	array.push_front(this_frame_inputs.duplicate()) # add to front
+	
 
 ## filters the imputs to get the needed and valid ones first
 func input_filter():
@@ -299,109 +247,13 @@ func input_filter():
 	if Input.is_action_pressed("HP"): inputs_of_curent_frame.append(HP)
 	if Input.is_action_pressed("HK"): inputs_of_curent_frame.append(HK)
 	
-	#if Input.is_action_pressed("jump"): inputs_of_curent_frame.append()
-	#size limit by removing the earlist input
+
 	resize_and_append_to_array(input_history,max_check_frames,inputs_of_curent_frame) # or call it rezise 
 	resize_and_append_to_array(buffered_array,max_buffer_frames,inputs_of_curent_frame)
-	# print check
-	#print(input_history)
-	#print(buffered_array)
-	#if input_history[-1] != input_history[-2]:
-		#print("input changed")
-	#print(seqcence_reader(input_history, DQCR))
-
-# TODO ask ai about how it would best be to orgaisze this this that will be very big a some point
-## this is where an Attack will be selected using many of the function in this class this will be a big part
-#func chose_action():
-	#if attack_manager.is_attacking == false:
-		#for attack in Attacks:   <<<<<<<<<<<<<<<<<<<<<<<< use this formath for gernreal sequences
-			#match attack:
-				#lk: 
-					##air specials
-					##air normal
-					##specials
-					#if player.is_facing_right == true and checks_for_Attacks(input_history,DQCR,LK):
-						#attack_manager.start_attack(dqcflk)
-						#break
-					#elif player.is_facing_right == false and checks_for_Attacks(input_history,DQCL,LK):
-						#attack_manager.start_attack(dqcflk)
-						#break
-						##back Attack
-					#elif player.is_facing_right == true and checks_for_Attacks(input_history,L,LK):
-						#attack_manager.start_attack(blk)
-						#break
-					#elif player.is_facing_right == false and checks_for_Attacks(input_history,R,LK):
-						#attack_manager.start_attack(blk)
-						#break
-						##regular buttion
-					#elif Input.is_action_pressed("LK"):
-						#attack_manager.start_attack(lk)
-						#break
-				#lp:
-					##specials
-					#if player.is_facing_right == true and checks_for_Attacks(input_history,DQCR,LP):
-						#attack_manager.start_attack(dqcflp)
-						#break
-					#elif player.is_facing_right == false and checks_for_Attacks(input_history,DQCL,LP):
-						#attack_manager.start_attack(dqcflp)
-						#break
-					##regular buttion
-					#elif Input.is_action_pressed("LP"):
-						#attack_manager.start_attack(lp)
-						#break
-				#
-				#hk:
-					#if Input.is_action_pressed("HK"):
-						#attack_manager.start_attack(hk)
-						#break
-				#hp:
-					#if Input.is_action_pressed("HP"):
-						#attack_manager.start_attack(hp)
-						#break
-				#null: 
-					#print(null)
-					#continue
-				#
-	#elif attack_manager.is_attacking:
-		##add loop
-		#if attack_manager.current_attack.combo_attacks_dictionary.is_empty():
-			#return
-		#else:
-			#
-			#for key in attack_manager.current_attack.combo_attacks_dictionary:
-				#
-				#if in_nested_array(buffered_array,key) and attack_manager.current_attack.can_combo:
-					#print("you did it")
-					#attack_manager.start_attack(attack_manager.current_attack.combo_attacks_dictionary[key])
-					#
-					#
-			#
-	#
-	#
-	#
-		##match seqcence_reader(input_history, DQCR):
-			##DQCR when in_nested_array(buffered_array,EXK) and player.is_facing_right==true: 
-				##print(str(DQCR) + str(EXK) + " forward")
-			##DQCR when in_nested_array(buffered_array,EXK) and player.is_facing_right==false: 
-				##print(str(DQCR) + str(EXK) + " back")
-			##DQCR when in_nested_array(buffered_array,LK) and player.is_facing_right==true: 
-				##print(str(DQCR) + str(LK) + " forward")
-			##DQCR when in_nested_array(buffered_array,LK) and player.is_facing_right==false: 
-				##print(str(DQCR) + str(LK) + " back")
-			##DQCR when in_nested_array(buffered_array,HK) and player.is_facing_right==true: 
-				##print(str(DQCR) + str(HK) + " forward")
-			##DQCR when in_nested_array(buffered_array,HK) and player.is_facing_right==false: 
-				##print(str(DQCR) + str(HK) + " back")
 
 #--------------------------------------------------------end of array manamgent
 
-#this doent implie dash can work how i want
-func checks_for_Attacks(input_h:Array, sequence:int, Attack_buttion:int) -> bool:
-	if seqcence_reader(input_h, sequence).front() == sequence and in_nested_array(buffered_array,Attack_buttion):
-		return true
-	return false
-
-func get_attack_button()-> int:
+func get_attack_button() -> int:
 	if FrameByFrameMode.frame_by_frame_mode_endabled == true:# for if so that when it unfecese you can use the attack by holding the butiion
 		if (Input.is_action_pressed("LK") and Input.is_action_pressed("HK")):
 			return EXK
@@ -430,92 +282,76 @@ func get_attack_button()-> int:
 		elif Input.is_action_just_pressed("HK"): return HK
 	return 0
 
-func chose_action2():
-	var sequnce: Array[int]
-	var dic: Dictionary
-	var valid: Array[Array]
-	# sort order?
-	#[LPK, lk, EXK, lp, HP, EXP, hp, HPK]
+## choses what attack is to be used based on player state and the most recent sequenc
+## howver ther is a workaround where a sequence must be at least 3 inputs otherwize
+## the prioraity is not the first attack but is intseat the first in the dictionary  
+func chose_action3():
+	var index: int
+	var most_recent_attack: Attack
+	var valids: Dictionary[int,int]
+	var attack_partial_key: Array = [# the 2/4 keys
+	player.is_on_floor(),
+	player.is_facing_right]
+	
+	
+	# check orrder is specials then comand noramls then nurtal normals and if attacking then combo attacks
 	if attack_manager.is_attacking == false:
-	#special moves
-		var a_buttion: int = get_attack_button()
-		print(all_special_motions.get([player.is_facing_right, a_buttion]))
-		if all_special_motions.get([player.is_facing_right, a_buttion]):
-			dic = all_special_motions.get([player.is_facing_right, a_buttion])
-		for motion in dic.keys():
-			if seqcence_reader(input_history,motion).front() == motion:
-				valid.append(seqcence_reader(input_history,motion))
-				print(valid)
-				# could be an enitre video 
-				sequnce = valid.reduce(func(min0, seq): return seq if seq.back() < min0.back() else min0)
-				print(sequnce)
+		for attack in all_specials:
+			#this if stamnted does 3 / 4 of the key checks 
+			if (attack[0] == attack_partial_key[0] 
+			and attack[1] == attack_partial_key[1] 
+			and single_input_check(buffered_array, attack[3])):
+				valids.merge(get_vaild_sequences(input_history, attack[2],),true)# the 4th key chech that also grabs the index of the seqxnrex 
+				# add the most recent attack 
+				if valids: 
+					index = valids.keys().min() # edit the most recent index if it needs to change
+					most_recent_attack = all_specials.get([attack[0],attack[1],valids.get(index),attack[3]])
+		#loop end
+		if most_recent_attack: attack_manager.start_attack(most_recent_attack)#stars the attack
 				
-		
-		if sequnce:
-			if sequnce == seqcence_reader(input_history,sequnce.front()):
-				attack_manager.start_attack(all_special_motions[[player.is_facing_right, a_buttion]][sequnce.front()])
-				print("you did it")
-			
-			
-		if attack_manager.is_attacking: return
-	#basic normals
-		var buttion_normals: Dictionary = normals.get(a_buttion,{})
-		if buttion_normals == {}: return
-		# air attack set
-		if player.is_on_floor() == false:
-			if player.is_facing_right == true and checks_for_Attacks(input_history,L,LK):
-				if buttion_normals.has(attack_type.AB): return
-				attack_manager.start_attack(buttion_normals[attack_type.AB])
-			elif player.is_facing_right == false and checks_for_Attacks(input_history,R,LK):
-				if buttion_normals.has(attack_type.AB) == false: return
-				attack_manager.start_attack(buttion_normals[attack_type.AB])
-			else:
-				if buttion_normals.has(attack_type.A) == false: return
-				attack_manager.start_attack(buttion_normals[attack_type.A])
-		# crouch set
-		elif Input.is_action_pressed("down") and player.is_on_floor():
-			if buttion_normals.has(attack_type.C) == false: return
-			attack_manager.start_attack(buttion_normals[attack_type.C])
-		# grounded set
-		elif player.is_on_floor(): 
-			if player.is_facing_right == true and checks_for_Attacks(input_history,L,LK):
-				if buttion_normals.has(attack_type.B) == false: return
-				attack_manager.start_attack(buttion_normals[attack_type.B])
-			elif player.is_facing_right == false and checks_for_Attacks(input_history,R,LK):
-				if buttion_normals.has(attack_type.B) == false: return
-				attack_manager.start_attack(buttion_normals[attack_type.B])
-			else:
-				if buttion_normals.has(attack_type.N) == false: return
-				attack_manager.start_attack(buttion_normals[attack_type.N])
-	
-	
+					
+					
+	if attack_manager.is_attacking == false:
+		for attack in command_normals:
+			#this if stamnted does 3 / 4 of the key checks 
+			if (attack[0] == attack_partial_key[0] 
+			and attack[1] == attack_partial_key[1] 
+			and single_input_check(buffered_array, attack[3])):
+				valids.merge(get_vaild_sequences(input_history, attack[2],),true)# the 4th key chech that also grabs the index of the seqxnrex 
+				# add the most recent attack 
+				if valids: #updates index 
+					index = valids.keys().min() # edit the most recent index if it needs to change
+					most_recent_attack = command_normals.get([attack[0],attack[1],valids.get(index),attack[3]])
+		#loop end
+		if most_recent_attack: attack_manager.start_attack(most_recent_attack)#stars the attack
+					
+	if attack_manager.is_attacking == false:
+		for attack in neutral_normals:
+			#this if stamnted does 3 / 4 of the key checks 
+			if (attack[0] == attack_partial_key[0] 
+			and attack[1] == attack_partial_key[1] 
+			and single_input_check(buffered_array, attack[3])):
+				valids.merge(get_vaild_sequences(input_history, attack[2],),true)# the 4th key chech that also grabs the index of the seqxnrex 
+				# add the most recent attack 
+				if valids: #null 
+					index = valids.keys().min() # edit the most recent index if it needs to change
+					most_recent_attack = neutral_normals.get([attack[0],attack[1],valids.get(index),attack[3]])
+		#loop end
+		if most_recent_attack: attack_manager.start_attack(most_recent_attack)#stars the attack
 
-		# sequnce 
-		# "buttion"
-		# facnig right
-		#groups: air, ground, back, special
-	#combo attacks 
-	elif attack_manager.is_attacking:
-		#TODO make check for combo attacks if it needs a sqecence for special 
-		#TODO and a dictary that holds all special moves 
-		if attack_manager.current_attack.combo_attacks_dictionary.is_empty():
-			return
-		else:
-			for key in attack_manager.current_attack.combo_attacks_dictionary:
-				if in_nested_array(buffered_array,key) and attack_manager.current_attack.can_combo:
-					print("you did it")
-					attack_manager.start_attack(attack_manager.current_attack.combo_attacks_dictionary[key])
+	else:
+		for key in attack_manager.current_attack.combo_attacks_dictionary:
+			if single_input_check(buffered_array,key) and attack_manager.current_attack.can_combo:
+				print("you did it")
+				attack_manager.start_attack(attack_manager.current_attack.combo_attacks_dictionary[key])
+	print(valids)
 
 func _process(_delta):
 	input_direction = round(Input.get_axis("left","right"))
-	#print(input_history)
-	#print(player.get_last_motion())
 	input_filter()
-	chose_action2()
+	chose_action3()
 	movement_manager()
 	flip_x_logic()
 	dash_handler2()
 	jump_handler2()
-	
-	
 	

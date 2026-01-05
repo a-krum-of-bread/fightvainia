@@ -1,6 +1,7 @@
-[gd_scene load_steps=46 format=3 uid="uid://prngvo6ycayf"]
+[gd_scene load_steps=55 format=3 uid="uid://prngvo6ycayf"]
 
 [ext_resource type="Script" uid="uid://d31hgc1h10800" path="res://player info/playerContoller.gd" id="1_n5p6r"]
+[ext_resource type="Script" uid="uid://ia0tuvmco8v8" path="res://testings/AnimationTool.gd" id="2_6he74"]
 [ext_resource type="Script" uid="uid://c56l0wv4lygfr" path="res://compents/compent scripts/PrimaryHurtBoxes.gd" id="3_2bl5q"]
 [ext_resource type="PackedScene" uid="uid://d107lsslvidei" path="res://compents/scenes/scale.tscn" id="3_aaaie"]
 [ext_resource type="PackedScene" uid="uid://bsu1mwwab4f52" path="res://compents/scenes/movement.tscn" id="3_coedu"]
@@ -17,8 +18,12 @@
 [ext_resource type="Script" uid="uid://b8564hciniqu3" path="res://compents/compent scripts/StunManager.gd" id="9_yomqy"]
 [ext_resource type="Script" uid="uid://c8e0lbybahcxv" path="res://resources/hitbox data resouce.gd" id="14_jilod"]
 [ext_resource type="Script" uid="uid://ckkq3f3j2wj34" path="res://compents/compent scripts/ProjectileArea.gd" id="15_5plvs"]
-[ext_resource type="Script" uid="uid://c6hjod27fe0no" path="res://resources/attack animation resource.gd" id="16_7y7to"]
+[ext_resource type="Resource" uid="uid://ct5kbj6vs60fb" path="res://testings/test_curves1.tres" id="18_gqyel"]
+[ext_resource type="Script" uid="uid://sx7qv8babvbw" path="res://testings/animation resource.gd" id="19_6he74"]
+[ext_resource type="Resource" uid="uid://5a0w77oo3wf5" path="res://testings/test_curves2.tres" id="19_7d36n"]
 [ext_resource type="Script" uid="uid://khr84mdfp2hk" path="res://auto load scripts/set cam.gd" id="19_r6qcp"]
+[ext_resource type="Resource" uid="uid://dcrwgqqu6o0gg" path="res://testings/test_curves3.tres" id="20_jxblt"]
+[ext_resource type="Resource" uid="uid://x8doshw2cu3h" path="res://testings/test_curves4.tres" id="21_x7ehb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5plvs"]
 size = Vector2(8, 20)
@@ -31,6 +36,23 @@ size = Vector2(16, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hhnao"]
 size = Vector2(16, 24)
+
+[sub_resource type="Resource" id="Resource_r6qcp"]
+script = ExtResource("14_jilod")
+stun_type = 0
+hit_type = 2
+block_stun_duration = 10
+block_back_distance = 30
+hit_stun_duration = 20
+hit_back_distance_vector = Vector2(100, -1)
+damage = 100
+metadata/_custom_type_script = "uid://c8e0lbybahcxv"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pcydc"]
+size = Vector2(24, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aaaie"]
+size = Vector2(10.284, 11.1111)
 
 [sub_resource type="Resource" id="Resource_5plvs"]
 script = ExtResource("14_jilod")
@@ -52,13 +74,10 @@ size = Vector2(8.71365, 10.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jilod"]
 size = Vector2(8.71365, 11.1111)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aaaie"]
-size = Vector2(10.284, 11.1111)
-
 [sub_resource type="Resource" id="Resource_jilod"]
 script = ExtResource("14_jilod")
 stun_type = 0
-hit_type = 1
+hit_type = 3
 block_stun_duration = 20
 block_back_distance = 30
 hit_stun_duration = 30
@@ -86,16 +105,35 @@ metadata/_custom_type_script = "uid://c8e0lbybahcxv"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7y7to"]
 size = Vector2(8, 8)
 
-[sub_resource type="Resource" id="Resource_c0h7f"]
-script = ExtResource("16_7y7to")
-displacement = Vector2(100, 0)
-time_in_frames = 15
-metadata/_custom_type_script = "uid://c6hjod27fe0no"
+[sub_resource type="Curve" id="Curve_6eorl"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 1, Vector2(1, 0.5), 0.0, 0.0, 1, 0]
+point_count = 2
 
-[sub_resource type="Resource" id="Resource_pcydc"]
-script = ExtResource("16_7y7to")
-displacement = Vector2(0, -100)
-metadata/_custom_type_script = "uid://c6hjod27fe0no"
+[sub_resource type="Curve" id="Curve_p2dg5"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 1, Vector2(1, 0.5), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_valns"]
+script = ExtResource("19_6he74")
+smoothing_curve_x = SubResource("Curve_6eorl")
+smoothing_curve_y = SubResource("Curve_p2dg5")
+displacement = Vector2(300, 0)
+metadata/_custom_type_script = "uid://sx7qv8babvbw"
+
+[sub_resource type="Curve" id="Curve_gqyel"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 1, Vector2(1, 0.5), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_7d36n"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_jxblt"]
+script = ExtResource("19_6he74")
+smoothing_curve_x = SubResource("Curve_gqyel")
+smoothing_curve_y = SubResource("Curve_7d36n")
+displacement = Vector2(0, -300)
+metadata/_custom_type_script = "uid://sx7qv8babvbw"
 
 [sub_resource type="Resource" id="Resource_7y7to"]
 script = ExtResource("14_jilod")
@@ -121,18 +159,6 @@ size = Vector2(8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0h7f"]
 size = Vector2(8, 8)
-
-[sub_resource type="Resource" id="Resource_r6qcp"]
-script = ExtResource("14_jilod")
-stun_type = 0
-block_stun_duration = 10
-block_back_distance = 30
-hit_stun_duration = 20
-hit_back_distance_vector = Vector2(100, -1)
-damage = 100
-metadata/_custom_type_script = "uid://c8e0lbybahcxv"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pcydc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w3mhv"]
 size = Vector2(16, 16)
@@ -162,6 +188,11 @@ input_component = NodePath("folder/inputmanager")
 PrimaryHurtBoxes_component = NodePath("folder/PrimaryHurtBoxes")
 stun_manager = NodePath("folder/stunManager")
 block_type = -1
+
+[node name="player animation tool" type="Node" parent="." node_paths=PackedStringArray("thing_to_animate")]
+script = ExtResource("2_6he74")
+thing_to_animate = NodePath("..")
+metadata/_custom_type_script = "uid://ia0tuvmco8v8"
 
 [node name="the player colision box" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
@@ -247,7 +278,7 @@ host = NodePath("../..")
 [node name="turn around delay" type="Node" parent="folder/scale"]
 script = ExtResource("6_eeho0")
 
-[node name="inputmanager" parent="folder" node_paths=PackedStringArray("player", "attack_manager", "coyote_timer", "movement_componet", "scale_component", "dash_component", "gravity_component", "lk", "blk", "hk", "lp", "hp", "dqcflk", "dqcflp", "dqcfhp", "fqcdhp", "dqcbhp", "bqcdhp") instance=ExtResource("6_aaaie")]
+[node name="inputmanager" parent="folder" node_paths=PackedStringArray("player", "attack_manager", "coyote_timer", "movement_componet", "scale_component", "dash_component", "gravity_component", "light_kick", "light_punch", "heavy_punch", "down_quarter_circle_forward_light_kick", "down_quarter_circle_forward_light_punch", "forward_quarter_circle_down_light_kick") instance=ExtResource("6_aaaie")]
 player = NodePath("../..")
 attack_manager = NodePath("../attack manager")
 coyote_timer = NodePath("../movement folder/coyote timer")
@@ -255,17 +286,12 @@ movement_componet = NodePath("../movement folder/movement")
 scale_component = NodePath("../scale")
 dash_component = NodePath("../movement folder/dash")
 gravity_component = NodePath("../movement folder/gravity")
-lk = NodePath("../attack manager/LK basic")
-blk = NodePath("../attack manager/bLK basic")
-hk = NodePath("../attack manager/HK launch")
-lp = NodePath("../attack manager/LP knock down")
-hp = NodePath("../attack manager/HP 1")
-dqcflk = NodePath("../attack manager/dqcflk special")
-dqcflp = NodePath("../attack manager/dqcflp projectile")
-dqcfhp = NodePath("../attack manager/LK basic")
-fqcdhp = NodePath("../attack manager/LP knock down")
-dqcbhp = NodePath("../attack manager/LK basic")
-bqcdhp = NodePath("../attack manager/LP knock down")
+light_kick = NodePath("../attack manager/LK basic")
+light_punch = NodePath("../attack manager/LP knock down")
+heavy_punch = NodePath("../attack manager/HP 1")
+down_quarter_circle_forward_light_kick = NodePath("../attack manager/dqcflk special")
+down_quarter_circle_forward_light_punch = NodePath("../attack manager/dqcflp projectile")
+forward_quarter_circle_down_light_kick = NodePath("../attack manager/HK launch")
 
 [node name="health" type="Node" parent="folder" node_paths=PackedStringArray("host")]
 script = ExtResource("7_eeho0")
@@ -273,8 +299,9 @@ max_health = 10000
 host = NodePath("../..")
 metadata/_custom_type_script = "uid://c5ucrpov3ddtq"
 
-[node name="stunManager" type="Node" parent="folder" node_paths=PackedStringArray("host")]
+[node name="stunManager" type="Node" parent="folder" node_paths=PackedStringArray("player_animation_tool", "host")]
 script = ExtResource("9_yomqy")
+player_animation_tool = NodePath("../../player animation tool")
 host = NodePath("../..")
 
 [node name="attack manager" type="Node2D" parent="folder" node_paths=PackedStringArray("health", "stun_manager", "host")]
@@ -283,144 +310,187 @@ health = NodePath("../health")
 stun_manager = NodePath("../stunManager")
 host = NodePath("../..")
 
-[node name="LP knock down" type="Node2D" parent="folder/attack manager"]
+[node name="dqcflp projectile" type="Node2D" parent="folder/attack manager"]
 script = ExtResource("4_coedu")
+kill_momnetum_of_tween = true
+animation_stuff = null
 
-[node name="frame # 0" type="Node2D" parent="folder/attack manager/LP knock down"]
+[node name="frame # 1-1" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
 script = ExtResource("7_1oqn1")
 
-[node name="hit_box # 100" type="Area2D" parent="folder/attack manager/LP knock down/frame # 0"]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_5plvs")
+[node name="frame # 2-2" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
+script = ExtResource("7_1oqn1")
 
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 0/hit_box # 100"]
-position = Vector2(16, 0)
-scale = Vector2(0.918099, 0.72)
-shape = SubResource("RectangleShape2D_yomqy")
+[node name="Projectile # 200" type="Area2D" parent="folder/attack manager/dqcflp projectile/frame # 2-2" node_paths=PackedStringArray("timer")]
+top_level = true
+collision_mask = 2
+script = ExtResource("15_5plvs")
+timer = NodePath("frame timer")
+max_lifespan_in_frames = 300
+animation_stuff = Array[ExtResource("19_6he74")]([ExtResource("18_gqyel"), ExtResource("19_7d36n"), ExtResource("20_jxblt"), ExtResource("21_x7ehb")])
+attack_data = SubResource("Resource_r6qcp")
+
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflp projectile/frame # 2-2/Projectile # 200"]
+position = Vector2(12, 0)
+shape = SubResource("RectangleShape2D_pcydc")
 disabled = true
 debug_color = Color(1, 0, 0, 0.686275)
 
-[node name="hurt_box # 300" type="Area2D" parent="folder/attack manager/LP knock down/frame # 0" node_paths=PackedStringArray("health", "stun_manager")]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("8_af2j0")
-health = NodePath("../../../../health")
-stun_manager = NodePath("../../../../stunManager")
+[node name="frame timer" type="Node" parent="folder/attack manager/dqcflp projectile/frame # 2-2/Projectile # 200"]
+script = ExtResource("6_eeho0")
 
-[node name="hurt_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 0/hurt_box # 300"]
-position = Vector2(16, 0)
-scale = Vector2(0.918099, 0.72)
-shape = SubResource("RectangleShape2D_eeho0")
-disabled = true
-debug_color = Color(0, 0, 1, 0.686275)
+[node name="projectile animation tool" type="Node" parent="folder/attack manager/dqcflp projectile/frame # 2-2/Projectile # 200" node_paths=PackedStringArray("thing_to_animate")]
+script = ExtResource("2_6he74")
+thing_to_animate = NodePath("..")
+metadata/_custom_type_script = "uid://ia0tuvmco8v8"
 
-[node name="frame # 1" type="Node2D" parent="folder/attack manager/LP knock down"]
+[node name="frame # 3-33" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
+script = ExtResource("7_1oqn1")
+repeat_this_frame = 30
+
+[node name="frame # 34-34" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
 script = ExtResource("7_1oqn1")
 
-[node name="hurt_box # 0" type="Area2D" parent="folder/attack manager/LP knock down/frame # 1" node_paths=PackedStringArray("health", "stun_manager")]
-collision_layer = 2
-script = ExtResource("8_af2j0")
-health = NodePath("../../../../health")
-stun_manager = NodePath("../../../../stunManager")
+[node name="LP knock down" type="Node2D" parent="folder/attack manager"]
+script = ExtResource("4_coedu")
+animation_stuff = null
 
-[node name="hurt_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 1/hurt_box # 0"]
-position = Vector2(16, 0)
-scale = Vector2(0.918099, 0.72)
-shape = SubResource("RectangleShape2D_jilod")
-disabled = true
-debug_color = Color(0, 0, 1, 0.686275)
-
-[node name="frame # 2" type="Node2D" parent="folder/attack manager/LP knock down"]
+[node name="frame # 1-1" type="Node2D" parent="folder/attack manager/LP knock down"]
 script = ExtResource("7_1oqn1")
 
-[node name="hurt_box # 0" type="Area2D" parent="folder/attack manager/LP knock down/frame # 2" node_paths=PackedStringArray("health", "stun_manager")]
+[node name="hurt_box # 0" type="Area2D" parent="folder/attack manager/LP knock down/frame # 1-1" node_paths=PackedStringArray("health", "stun_manager")]
 collision_layer = 2
 script = ExtResource("8_af2j0")
 health = NodePath("../../../../health")
 stun_manager = NodePath("../../../../stunManager")
 
-[node name="hurt_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 2/hurt_box # 0"]
+[node name="hurt_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 1-1/hurt_box # 0"]
 position = Vector2(16, 0)
 scale = Vector2(0.778826, 0.72)
 shape = SubResource("RectangleShape2D_aaaie")
 disabled = true
 debug_color = Color(0, 0, 1, 0.686275)
 
+[node name="frame # 2-2" type="Node2D" parent="folder/attack manager/LP knock down"]
+script = ExtResource("7_1oqn1")
+
+[node name="hit_box # 100" type="Area2D" parent="folder/attack manager/LP knock down/frame # 2-2"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("9_an3v2")
+attack_data = SubResource("Resource_5plvs")
+
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 2-2/hit_box # 100"]
+position = Vector2(16, 0)
+scale = Vector2(0.918099, 0.72)
+shape = SubResource("RectangleShape2D_yomqy")
+disabled = true
+debug_color = Color(1, 0, 0, 0.686275)
+
+[node name="hurt_box # 300" type="Area2D" parent="folder/attack manager/LP knock down/frame # 2-2" node_paths=PackedStringArray("health", "stun_manager")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("8_af2j0")
+health = NodePath("../../../../health")
+stun_manager = NodePath("../../../../stunManager")
+
+[node name="hurt_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 2-2/hurt_box # 300"]
+position = Vector2(16, 0)
+scale = Vector2(0.918099, 0.72)
+shape = SubResource("RectangleShape2D_eeho0")
+disabled = true
+debug_color = Color(0, 0, 1, 0.686275)
+
+[node name="frame # 3-3" type="Node2D" parent="folder/attack manager/LP knock down"]
+script = ExtResource("7_1oqn1")
+
+[node name="hurt_box # 0" type="Area2D" parent="folder/attack manager/LP knock down/frame # 3-3" node_paths=PackedStringArray("health", "stun_manager")]
+collision_layer = 2
+script = ExtResource("8_af2j0")
+health = NodePath("../../../../health")
+stun_manager = NodePath("../../../../stunManager")
+
+[node name="hurt_box" type="CollisionShape2D" parent="folder/attack manager/LP knock down/frame # 3-3/hurt_box # 0"]
+position = Vector2(16, 0)
+scale = Vector2(0.918099, 0.72)
+shape = SubResource("RectangleShape2D_jilod")
+disabled = true
+debug_color = Color(0, 0, 1, 0.686275)
+
 [node name="LK basic" type="Node2D" parent="folder/attack manager"]
 script = ExtResource("4_coedu")
+animation_stuff = null
 
-[node name="frame # 0" type="Node2D" parent="folder/attack manager/LK basic"]
+[node name="frame # 1-1" type="Node2D" parent="folder/attack manager/LK basic"]
 script = ExtResource("7_1oqn1")
 
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 0"]
+[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 1-1"]
+collision_mask = 2
+script = ExtResource("9_an3v2")
+attack_data = SubResource("Resource_jilod")
+
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 1-1/hit_box # 0"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_rgd3p")
+disabled = true
+debug_color = Color(1, 0, 0, 0.686275)
+
+[node name="frame # 2-2" type="Node2D" parent="folder/attack manager/LK basic"]
+script = ExtResource("7_1oqn1")
+
+[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 2-2"]
+collision_mask = 2
+script = ExtResource("9_an3v2")
+attack_data = SubResource("Resource_jilod")
+
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 2-2/hit_box # 0"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_rgd3p")
+disabled = true
+debug_color = Color(1, 0, 0, 0.686275)
+
+[node name="frame # 3-3" type="Node2D" parent="folder/attack manager/LK basic"]
+script = ExtResource("7_1oqn1")
+
+[node name="frame # 4-4" type="Node2D" parent="folder/attack manager/LK basic"]
+script = ExtResource("7_1oqn1")
+
+[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 4-4"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("9_an3v2")
 attack_data = SubResource("Resource_jilod")
 
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 0/hit_box # 0"]
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 4-4/hit_box # 0"]
 position = Vector2(32, 0)
 shape = SubResource("RectangleShape2D_rgd3p")
 disabled = true
 debug_color = Color(1, 0, 0, 0.686275)
 
-[node name="frame # 1" type="Node2D" parent="folder/attack manager/LK basic"]
+[node name="frame # 5-5" type="Node2D" parent="folder/attack manager/LK basic"]
 script = ExtResource("7_1oqn1")
 
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 1"]
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_jilod")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 1/hit_box # 0"]
-position = Vector2(32, 0)
-shape = SubResource("RectangleShape2D_rgd3p")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 2" type="Node2D" parent="folder/attack manager/LK basic"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 2"]
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_jilod")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 2/hit_box # 0"]
-position = Vector2(32, 0)
-shape = SubResource("RectangleShape2D_rgd3p")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 3" type="Node2D" parent="folder/attack manager/LK basic"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 3"]
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_jilod")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 3/hit_box # 0"]
-position = Vector2(32, 0)
-shape = SubResource("RectangleShape2D_rgd3p")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 4" type="Node2D" parent="folder/attack manager/LK basic"]
-script = ExtResource("7_1oqn1")
-
-[node name="frame # 5" type="Node2D" parent="folder/attack manager/LK basic"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 5"]
+[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 5-5"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("9_an3v2")
 attack_data = SubResource("Resource_jilod")
 
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 5/hit_box # 0"]
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 5-5/hit_box # 0"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_rgd3p")
+disabled = true
+debug_color = Color(1, 0, 0, 0.686275)
+
+[node name="frame # 6-6" type="Node2D" parent="folder/attack manager/LK basic"]
+script = ExtResource("7_1oqn1")
+
+[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/LK basic/frame # 6-6"]
+collision_mask = 2
+script = ExtResource("9_an3v2")
+attack_data = SubResource("Resource_jilod")
+
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/LK basic/frame # 6-6/hit_box # 0"]
 position = Vector2(32, 0)
 shape = SubResource("RectangleShape2D_rgd3p")
 disabled = true
@@ -429,33 +499,34 @@ debug_color = Color(1, 0, 0, 0.686275)
 [node name="HK launch" type="Node2D" parent="folder/attack manager"]
 visible = false
 script = ExtResource("4_coedu")
+animation_stuff = null
 
-[node name="frame # 0" type="Node2D" parent="folder/attack manager/HK launch"]
+[node name="frame # 1-1" type="Node2D" parent="folder/attack manager/HK launch"]
 script = ExtResource("7_1oqn1")
 
-[node name="frame # 1" type="Node2D" parent="folder/attack manager/HK launch"]
+[node name="frame # 2-2" type="Node2D" parent="folder/attack manager/HK launch"]
 script = ExtResource("7_1oqn1")
 
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/HK launch/frame # 1"]
+[node name="hit_box # 100" type="Area2D" parent="folder/attack manager/HK launch/frame # 2-2"]
 collision_mask = 2
 script = ExtResource("9_an3v2")
 attack_data = SubResource("Resource_rgd3p")
 
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/HK launch/frame # 1/hit_box # 0"]
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/HK launch/frame # 2-2/hit_box # 100"]
 position = Vector2(48, 0)
 shape = SubResource("RectangleShape2D_7y7to")
 disabled = true
 debug_color = Color(1, 0, 0, 0.686275)
 
-[node name="frame # 2" type="Node2D" parent="folder/attack manager/HK launch"]
+[node name="frame # 3-3" type="Node2D" parent="folder/attack manager/HK launch"]
 script = ExtResource("7_1oqn1")
 
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/HK launch/frame # 2"]
+[node name="hit_box # 100" type="Area2D" parent="folder/attack manager/HK launch/frame # 3-3"]
 collision_mask = 2
 script = ExtResource("9_an3v2")
 attack_data = SubResource("Resource_rgd3p")
 
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/HK launch/frame # 2/hit_box # 0"]
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/HK launch/frame # 3-3/hit_box # 100"]
 position = Vector2(48, 0)
 shape = SubResource("RectangleShape2D_7y7to")
 disabled = true
@@ -464,82 +535,30 @@ debug_color = Color(1, 0, 0, 0.686275)
 [node name="dqcflk special" type="Node2D" parent="folder/attack manager"]
 position = Vector2(4, 0)
 script = ExtResource("4_coedu")
-attack_animation = Array[ExtResource("16_7y7to")]([SubResource("Resource_c0h7f"), SubResource("Resource_pcydc")])
+animation_stuff = Array[ExtResource("19_6he74")]([SubResource("Resource_valns"), SubResource("Resource_jxblt")])
 
-[node name="frame # 0" type="Node2D" parent="folder/attack manager/dqcflk special"]
+[node name="frame # 1-1" type="Node2D" parent="folder/attack manager/dqcflk special"]
 script = ExtResource("7_1oqn1")
 
-[node name="frame # 1" type="Node2D" parent="folder/attack manager/dqcflk special"]
+[node name="frame # 2-6" type="Node2D" parent="folder/attack manager/dqcflk special"]
 script = ExtResource("7_1oqn1")
+repeat_this_frame = 100
 
-[node name="frame # 2" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
-
-[node name="frame # 3" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
-
-[node name="frame # 4" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/dqcflk special/frame # 4"]
+[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/dqcflk special/frame # 2-6"]
 collision_mask = 2
 script = ExtResource("9_an3v2")
 attack_data = SubResource("Resource_7y7to")
 
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflk special/frame # 4/hit_box # 0"]
+[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflk special/frame # 2-6/hit_box # 0"]
 position = Vector2(8, -8)
 shape = SubResource("RectangleShape2D_2bl5q")
 disabled = true
 debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 5" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/dqcflk special/frame # 5"]
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_7y7to")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflk special/frame # 5/hit_box # 0"]
-position = Vector2(8, -8)
-shape = SubResource("RectangleShape2D_2bl5q")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 6" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/dqcflk special/frame # 6"]
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_7y7to")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflk special/frame # 6/hit_box # 0"]
-position = Vector2(8, -8)
-shape = SubResource("RectangleShape2D_2bl5q")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 7" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
-
-[node name="hit_box # 0" type="Area2D" parent="folder/attack manager/dqcflk special/frame # 7"]
-collision_mask = 2
-script = ExtResource("9_an3v2")
-attack_data = SubResource("Resource_7y7to")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflk special/frame # 7/hit_box # 0"]
-position = Vector2(8, -8)
-shape = SubResource("RectangleShape2D_2bl5q")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="frame # 8" type="Node2D" parent="folder/attack manager/dqcflk special"]
-script = ExtResource("7_1oqn1")
 
 [node name="bLK basic" type="Node2D" parent="folder/attack manager"]
 visible = false
 script = ExtResource("4_coedu")
+animation_stuff = null
 
 [node name="frame # 1" type="Node2D" parent="folder/attack manager/bLK basic"]
 script = ExtResource("7_1oqn1")
@@ -581,40 +600,6 @@ script = ExtResource("7_1oqn1")
 [node name="frame # 6" type="Node2D" parent="folder/attack manager/bLK basic"]
 script = ExtResource("7_1oqn1")
 
-[node name="dqcflp projectile" type="Node2D" parent="folder/attack manager"]
-visible = false
-script = ExtResource("4_coedu")
-
-[node name="frame # 1" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
-script = ExtResource("7_1oqn1")
-
-[node name="frame # 2" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
-script = ExtResource("7_1oqn1")
-
-[node name="frame # 3" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
-script = ExtResource("7_1oqn1")
-
-[node name="frame # 4" type="Node2D" parent="folder/attack manager/dqcflp projectile"]
-script = ExtResource("7_1oqn1")
-
-[node name="Projectile # 0" type="Area2D" parent="folder/attack manager/dqcflp projectile/frame # 4" node_paths=PackedStringArray("timer")]
-top_level = true
-collision_mask = 2
-script = ExtResource("15_5plvs")
-speed_facing_right = Vector2(20, 0)
-active_frames = 300
-timer = NodePath("duration")
-attack_data = SubResource("Resource_r6qcp")
-
-[node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflp projectile/frame # 4/Projectile # 0"]
-position = Vector2(8, 0)
-shape = SubResource("RectangleShape2D_pcydc")
-disabled = true
-debug_color = Color(1, 0, 0, 0.686275)
-
-[node name="duration" type="Node" parent="folder/attack manager/dqcflp projectile/frame # 4/Projectile # 0"]
-script = ExtResource("6_eeho0")
-
 [node name="HP 1" type="Node2D" parent="folder/attack manager" node_paths=PackedStringArray("combo_attacks_dictionary")]
 visible = false
 script = ExtResource("4_coedu")
@@ -625,6 +610,7 @@ combo_attacks_dictionary = {
 is_combo_attack = true
 start_frame = 20
 end_frame = 20
+animation_stuff = null
 
 [node name="frame # 1" type="Node2D" parent="folder/attack manager/HP 1"]
 script = ExtResource("7_1oqn1")
@@ -716,6 +702,7 @@ script = ExtResource("7_1oqn1")
 [node name="HP 2 w hp" type="Node2D" parent="folder/attack manager"]
 visible = false
 script = ExtResource("4_coedu")
+animation_stuff = null
 
 [node name="frame # 1" type="Node2D" parent="folder/attack manager/HP 2 w hp"]
 script = ExtResource("7_1oqn1")
@@ -761,6 +748,7 @@ script = ExtResource("7_1oqn1")
 [node name="HP 2 w hk" type="Node2D" parent="folder/attack manager"]
 visible = false
 script = ExtResource("4_coedu")
+animation_stuff = null
 
 [node name="frame # 1" type="Node2D" parent="folder/attack manager/HP 2 w hk"]
 script = ExtResource("7_1oqn1")
@@ -789,3 +777,6 @@ script = ExtResource("7_1oqn1")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 script = ExtResource("19_r6qcp")
+
+[connection signal="animate" from="folder/attack manager" to="player animation tool" method="animate"]
+[connection signal="animate" from="folder/attack manager/dqcflp projectile/frame # 2-2/Projectile # 200" to="folder/attack manager/dqcflp projectile/frame # 2-2/Projectile # 200/projectile animation tool" method="animate"]

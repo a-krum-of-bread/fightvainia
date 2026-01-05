@@ -1,228 +1,314 @@
-# TODO make comment this thing way more 
-## a class allmost like a resourse to hold the wayy too many export varabils
-class_name MoveList extends BehaviourBase
-## This enum holds all of the constants for motion inputs and Attacks as sequences or numbers
-## For example DL=1 for down left as a number and DQCR=236 as a sequence
-# D=DOWN, L=LEFT, R=RIGHT, U=UP, QC=QuarterCircle, 
-#K=Kick, P=Punch, L can aslo be light, H = heavy, EX=EXtra or somthing 
-enum {DL=1,D=2,DR=3,L=4,NEUTRAL=5,R=6,UL=7,U=8,UR=9,
-LK=12,HK=16,EXK=13,LP=14,HP=18,EXP=17,LPK=11,HPK=19,
-DQCR=236,DQCL=214,UQCR=896,UQCL=874,LQCD=412,RQCD=632,LQCU=478,RQCU=698,
-RDPD=623,LDPD=421,RDPU=689,LDPU=487,
-DASHR=5656,DASHL=5454}
+## MoveList
+## doesnt contain all attacks becuse of how combo attacks are coded
+## Organizes all attacks into nested dictionaries for easy access and management.
+## All attacks are separately defined as variables and then categorized into folders in the editor.
+## Attacks are organized into dictionaries by priority: all_specials, command_normals, neutral_normals, all_attacks.
+## If air is not specified, the attack is a grounded attack.
+## 
+## Dictionary types and key format:
+## - all_specials: Dictionary[Array, Attack] - Motion inputs (sequences like 236)
+## - command_normals: Dictionary[Array, Attack] - Direction + button (no NEUTRAL motion)
+## - neutral_normals: Dictionary[Array, Attack] - NEUTRAL + button only
+## - all_attacks: Dictionary[Array, Attack] - Contains all attacks merged
+## Key format: [is_on_ground: bool, is_facing_right: bool, motion: int, button: int]
+## 
+## Variable naming legend (only change variable names):
+## a = air
+## b = back
+## u = up
+## d = down
+## l = left (when used as a direction)
+## l = light (when used for attack button)
+## r = right
+## h = heavy
+## p = punch
+## k = kick
+## qc = quarter circle
+## f = forward
+## dp = dragon punch
+## ex = extra/EX move
+## 
+## This enum holds all constants for motion inputs and attacks as sequences or numbers.
+## For example: DL=1 for down-left as a number, DQCR=236 as a sequence.
+class_name MoveList extends BehaviourBase 
+enum {DL=1,D=2,DR=3,L=4,NEUTRAL=5,R=6,UL=7,U=8,UR=9, # input directions
+LK=12,HK=16,EXK=13,LP=14,HP=18,EXP=17,LPK=11,HPK=19, #attack buttons
+DQCR=236,DQCL=214,UQCR=896,UQCL=874,LQCD=412,RQCD=632,LQCU=478,RQCU=698, #quarter circle motions
+RDPD=623,LDPD=421,RDPU=689,LDPU=487, #dragon punch motions
+DASHR=5656,DASHL=5454} 
 
-
-## all of these are indivual Attacks as of now ther are nurtal air couch and back Attacks
+## all of these are individual Attacks as of now there are neutral air crouch and back Attacks
 @export_group("normal Attacks")
-enum attack_type {N,C,A,B,AB}
-#sort order nemerical  a = air b= back c = crouch
-# lpk need to be made
-@export_subgroup("lk normal Attacks")
-@export var lk: Attack
-@export var clk: Attack
-@export var alk: Attack
-@export var blk: Attack
-@export var ablk: Attack
-@onready var lk_normals: Dictionary[attack_type, Attack] = {
-	attack_type.N: lk,
-	attack_type.C: clk, 
-	attack_type.A: alk,
-	attack_type.B: blk,
-	attack_type.AB: ablk
-}
-#exk need to be made
-@export_subgroup("hk normal Attacks")
-@export var hk: Attack
-@export var chk: Attack
-@export var ahk: Attack
-@export var bhk: Attack
-@export var abhk: Attack
-@onready var hk_normals: Dictionary[attack_type,Attack] ={
-	attack_type.N: hk,
-	attack_type.C: chk,
-	attack_type.A: ahk,
-	attack_type.B: bhk,
-	attack_type.AB: abhk,
-}
-@export_subgroup("lp normal Attacks")
-@export var lp: Attack
-@export var alp: Attack
-@export var clp: Attack
-@export var blp: Attack
-@export var ablp: Attack
-@onready var lp_normals: Dictionary[attack_type,Attack] ={
-	attack_type.N: lp,
-	attack_type.C: clp,
-	attack_type.A: alp,
-	attack_type.B: blp,
-	attack_type.AB: ablp,
-}
 
-#exp need to be made
-@export_subgroup("hp normal Attacks")
-@export var hp: Attack
-@export var chp: Attack
-@export var ahp: Attack
-@export var bhp: Attack
-@export var abhp: Attack
-@onready var hp_normals: Dictionary[attack_type,Attack] ={
-	attack_type.N: hp,
-	attack_type.C: chp,
-	attack_type.A: ahp,
-	attack_type.B: bhp,
-	attack_type.AB: abhp}
-#hpk need to be made
+@export_subgroup("light kick normal Attacks")
+@export var light_kick: Attack
+@export var down_light_kick: Attack
+@export var air_light_kick: Attack
+@export var air_forward_kick: Attack
+@export var back_light_kick: Attack
+@export var air_back_kick: Attack
+@onready var light_kick_normals: Dictionary[Array, Attack] = {
+	#grounded right 
+	[true,true,NEUTRAL,LK]: light_kick,
+	[true,true,D,LK]: down_light_kick, 
+	[true,true,L,LK]: back_light_kick,
+	#grounded left 
+	[true,false,NEUTRAL,LK]: light_kick,
+	[true,false,D,LK]: down_light_kick, 
+	[true,false,R,LK]: back_light_kick,
+	#air right
+	[false,true,NEUTRAL,LK]: air_light_kick,
+	[false,true,R,LK]: air_forward_kick,
+	[false,true,L,LK]: air_back_kick,
+	#air left
+	[false,false,NEUTRAL,LK]: air_light_kick,
+	[false,false,L,LK]: air_forward_kick,
+	[false,false,R,LK]: air_back_kick}
 
-enum attack_pad {ZERO=0,LK=12,HK=16,EXK=13,LP=14,HP=18,EXP=17,LPK=11,HPK=19}
-@onready var normals: Dictionary[attack_pad, Dictionary]={
-	attack_pad.ZERO: {},
-	attack_pad.LK: lk_normals,
-	attack_pad.HK: hk_normals,
-	attack_pad.LP: lp_normals,
-	attack_pad.HP: hp_normals}
+@export_subgroup("light punch normal Attacks")
+@export var light_punch: Attack
+@export var air_light_punch: Attack
+@export var air_forward_punch: Attack
+@export var down_light_punch: Attack
+@export var back_light_punch: Attack
+@export var air_back_punch: Attack
+@onready var light_punch_normals: Dictionary[Array, Attack] = {
+	#grounded right 
+	[true,true,NEUTRAL,LP]: light_punch,
+	[true,true,D,LP]: down_light_punch, 
+	[true,true,L,LP]: back_light_punch,
+	#grounded left 
+	[true,false,NEUTRAL,LP]: light_punch,
+	[true,false,D,LP]: down_light_punch, 
+	[true,false,R,LP]: back_light_punch,
+	#air right
+	[false,true,NEUTRAL,LP]: air_light_punch,
+	[false,true,R,LP]: air_forward_punch,
+	[false,true,L,LP]: air_back_punch,
+	#air left
+	[false,false,NEUTRAL,LP]: air_light_punch,
+	[false,false,L,LP]: air_forward_punch,
+	[false,false,R,LP]: air_back_punch}
 
-@export_group("specal moves")
-## these have sequnecs but are the same as the other Attacks
-@export_subgroup("forward specal moves") 
-@export var dqcflk: Attack
-@export var dqcflp: Attack
-@export var dqcfhk: Attack
-@export var dqcfhp: Attack
-@export var fqcdlk: Attack
-@export var fqcdlp: Attack
-@export var fqcdhk: Attack
-@export var fqcdhp: Attack
+@export_subgroup("heavy kick normal Attacks")
+@export var heavy_kick: Attack
+@export var down_heavy_kick: Attack
+@export var air_heavy_kick: Attack
+@export var air_forward_heavy_kick: Attack
+@export var back_heavy_kick: Attack
+@export var air_back_heavy_kick: Attack
+@onready var heavy_kick_normals: Dictionary[Array, Attack] = {
+	#grounded right 
+	[true,true,NEUTRAL,HK]: heavy_kick,
+	[true,true,D,HK]: down_heavy_kick, 
+	[true,true,L,HK]: back_heavy_kick,
+	#grounded left 
+	[true,false,NEUTRAL,HK]: heavy_kick,
+	[true,false,D,HK]: down_heavy_kick, 
+	[true,false,R,HK]: back_heavy_kick,
+	#air right
+	[false,true,NEUTRAL,HK]: air_heavy_kick,
+	[false,true,R,HK]: air_forward_heavy_kick,
+	[false,true,L,HK]: air_back_heavy_kick,
+	#air left
+	[false,false,NEUTRAL,HK]: air_heavy_kick,
+	[false,false,L,HK]: air_forward_heavy_kick,
+	[false,false,R,HK]: air_back_heavy_kick}
 
+@export_subgroup("heavy punch normal Attacks")
+@export var heavy_punch: Attack
+@export var down_heavy_punch: Attack
+@export var air_heavy_punch: Attack
+@export var air_forward_heavy_punch: Attack
+@export var back_heavy_punch: Attack
+@export var air_back_heavy_punch: Attack
+@onready var heavy_punch_normals: Dictionary[Array, Attack] = {
+	#grounded right 
+	[true,true,NEUTRAL,HP]: heavy_punch,
+	[true,true,D,HP]: down_heavy_punch, 
+	[true,true,L,HP]: back_heavy_punch,
+	#grounded left 
+	[true,false,NEUTRAL,HP]: heavy_punch,
+	[true,false,D,HP]: down_heavy_punch, 
+	[true,false,R,HP]: back_heavy_punch,
+	#air right
+	[false,true,NEUTRAL,HP]: air_heavy_punch,
+	[false,true,R,HP]: air_forward_heavy_punch,
+	[false,true,L,HP]: air_back_heavy_punch,
+	#air left
+	[false,false,NEUTRAL,HP]: air_heavy_punch,
+	[false,false,L,HP]: air_forward_heavy_punch,
+	[false,false,R,HP]: air_back_heavy_punch}
 
-@export_subgroup("back specal moves")
-@export var dqcblk: Attack
-@export var dqcblp: Attack
-@export var dqcbhk: Attack
-@export var dqcbhp: Attack
-@export var bqcdlk: Attack
-@export var bqcdlp: Attack
-@export var bqcdhk: Attack
-@export var bqcdhp: Attack
+@export_group("special moves")
+@export_subgroup("quarter circle special moves")
+@export_subgroup("quarter circle special moves/down->forward")
+@export var down_quarter_circle_forward_light_kick: Attack
+@export var down_quarter_circle_forward_light_punch: Attack
+@export var down_quarter_circle_forward_heavy_kick: Attack
+@export var down_quarter_circle_forward_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/forward->down")
+@export var forward_quarter_circle_down_light_kick: Attack
+@export var forward_quarter_circle_down_light_punch: Attack
+@export var forward_quarter_circle_down_heavy_kick: Attack
+@export var forward_quarter_circle_down_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/up->forward")
+@export var up_quarter_circle_forward_light_kick: Attack
+@export var up_quarter_circle_forward_light_punch: Attack
+@export var up_quarter_circle_forward_heavy_kick: Attack
+@export var up_quarter_circle_forward_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/forward->up")
+@export var forward_quarter_circle_up_light_kick: Attack
+@export var forward_quarter_circle_up_light_punch: Attack
+@export var forward_quarter_circle_up_heavy_kick: Attack
+@export var forward_quarter_circle_up_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/down->back")
+@export var down_quarter_circle_back_light_kick: Attack
+@export var down_quarter_circle_back_light_punch: Attack
+@export var down_quarter_circle_back_heavy_kick: Attack
+@export var down_quarter_circle_back_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/back->down")
+@export var back_quarter_circle_down_light_kick: Attack
+@export var back_quarter_circle_down_light_punch: Attack
+@export var back_quarter_circle_down_heavy_kick: Attack
+@export var back_quarter_circle_down_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/up->back")
+@export var up_quarter_circle_back_light_kick: Attack
+@export var up_quarter_circle_back_light_punch: Attack
+@export var up_quarter_circle_back_heavy_kick: Attack
+@export var up_quarter_circle_back_heavy_punch: Attack
+@export_subgroup("quarter circle special moves/back->up")
+@export var back_quarter_circle_up_light_kick: Attack
+@export var back_quarter_circle_up_light_punch: Attack
+@export var back_quarter_circle_up_heavy_kick: Attack
+@export var back_quarter_circle_up_heavy_punch: Attack
 
+@onready var light_kick_specials: Dictionary[Array,Attack] = {
+	#ground right quarter circle
+	[true,true,DQCR,LK]: down_quarter_circle_forward_light_kick,
+	[true,true,RQCD,LK]: forward_quarter_circle_down_light_kick,
+	[true,true,UQCR,LK]: up_quarter_circle_forward_light_kick,
+	[true,true,RQCU,LK]: forward_quarter_circle_up_light_kick,
+	[true,true,DQCL,LK]: down_quarter_circle_back_light_kick,
+	[true,true,LQCD,LK]: back_quarter_circle_down_light_kick,
+	[true,true,UQCL,LK]: up_quarter_circle_back_light_kick,
+	[true,true,LQCU,LK]: back_quarter_circle_up_light_kick,
+	#ground left quarter circle
+	[true,false,DQCL,LK]: down_quarter_circle_forward_light_kick,
+	[true,false,LQCD,LK]: forward_quarter_circle_down_light_kick,
+	[true,false,UQCL,LK]: up_quarter_circle_forward_light_kick,
+	[true,false,LQCU,LK]: forward_quarter_circle_up_light_kick,
+	[true,false,DQCR,LK]: down_quarter_circle_back_light_kick,
+	[true,false,RQCD,LK]: back_quarter_circle_down_light_kick,
+	[true,false,UQCR,LK]: up_quarter_circle_back_light_kick,
+	[true,false,RQCU,LK]: back_quarter_circle_up_light_kick}
 
-@onready var right_lk_dictionary: Dictionary[int,Attack] = {
-	#back
-	DQCL:dqcblk,
-	LQCD:null,
-	UQCL:null,
-	LQCU:null,
-	#forward
-	DQCR:dqcflk,
-	RQCD:null,
-	UQCR:null,
-	RQCU:null,}
-@onready var right_lp_dictionary: Dictionary[int,Attack] = {
-	#back
-	DQCL:dqcblp,
-	LQCD:null,
-	UQCL:null,
-	LQCU:null,
-	#forward
-	DQCR:dqcflp,
-	RQCD:null,
-	UQCR:null,
-	RQCU:null,}
-@onready var right_hk_dictionary: Dictionary[int,Attack] = {
-	#back
-	DQCL:null,
-	LQCD:null,
-	UQCL:null,
-	LQCU:null,
-	#forward
-	DQCR:null,
-	RQCD:null,
-	UQCR:null,
-	RQCU:null,}
-@onready var right_hp_dictionary: Dictionary[int,Attack] = {
-	#back
-	DQCL:dqcbhp,
-	LQCD:bqcdhp,
-	UQCL:null,
-	LQCU:null,
-	#forward
-	DQCR:dqcfhp,
-	RQCD:fqcdhp,
-	UQCR:null,
-	RQCU:null,}
+@onready var light_punch_specials: Dictionary[Array,Attack] = {
+	#ground right quarter circle
+	[true,true,DQCR,LP]: down_quarter_circle_forward_light_punch,
+	[true,true,RQCD,LP]: forward_quarter_circle_down_light_punch,
+	[true,true,UQCR,LP]: up_quarter_circle_forward_light_punch,
+	[true,true,RQCU,LP]: forward_quarter_circle_up_light_punch,
+	[true,true,DQCL,LP]: down_quarter_circle_back_light_punch,
+	[true,true,LQCD,LP]: back_quarter_circle_down_light_punch,
+	[true,true,UQCL,LP]: up_quarter_circle_back_light_punch,
+	[true,true,LQCU,LP]: back_quarter_circle_up_light_punch,
+	#ground left quarter circle
+	[true,false,DQCL,LP]: down_quarter_circle_forward_light_punch,
+	[true,false,LQCD,LP]: forward_quarter_circle_down_light_punch,
+	[true,false,UQCL,LP]: up_quarter_circle_forward_light_punch,
+	[true,false,LQCU,LP]: forward_quarter_circle_up_light_punch,
+	[true,false,DQCR,LP]: down_quarter_circle_back_light_punch,
+	[true,false,RQCD,LP]: back_quarter_circle_down_light_punch,
+	[true,false,UQCR,LP]: up_quarter_circle_back_light_punch,
+	[true,false,RQCU,LP]: back_quarter_circle_up_light_punch}
 
-@onready var left_lp_dictionary: Dictionary[int,Attack] = {
-	#forward
-	DQCL:right_lp_dictionary[DQCR],
-	LQCD:right_lp_dictionary[RQCD],
-	UQCL:right_lp_dictionary[UQCR],
-	LQCU:right_lp_dictionary[RQCU],
-	#back
-	DQCR:right_lp_dictionary[DQCL],
-	RQCD:right_lp_dictionary[LQCD],
-	UQCR:right_lp_dictionary[UQCL],
-	RQCU:right_lp_dictionary[LQCU],}
-@onready var left_lk_dictionary: Dictionary[int,Attack] = {
-	#forward
-	DQCL:right_lk_dictionary[DQCR],
-	LQCD:right_lk_dictionary[RQCD],
-	UQCL:right_lk_dictionary[UQCR],
-	LQCU:right_lk_dictionary[RQCU],
-	#back
-	DQCR:right_lk_dictionary[DQCL],
-	RQCD:right_lk_dictionary[LQCD],
-	UQCR:right_lk_dictionary[UQCL],
-	RQCU:right_lk_dictionary[LQCU],}
-@onready var left_hk_dictionary: Dictionary[int,Attack] = {
-	#forward
-	DQCL:right_hk_dictionary[DQCR],
-	LQCD:right_hk_dictionary[RQCD],
-	UQCL:right_hk_dictionary[UQCR],
-	LQCU:right_hk_dictionary[RQCU],
-	#back
-	DQCR:right_hk_dictionary[DQCL],
-	RQCD:right_hk_dictionary[LQCD],
-	UQCR:right_hk_dictionary[UQCL],
-	RQCU:right_hk_dictionary[LQCU],}
-@onready var left_hp_dictionary: Dictionary[int,Attack] = {
-	#forward
-	DQCL:right_hp_dictionary[DQCR],
-	LQCD:right_hp_dictionary[RQCD],
-	UQCL:right_hp_dictionary[UQCR],
-	LQCU:right_hp_dictionary[RQCU],
-	#back
-	DQCR:right_hp_dictionary[DQCL],
-	RQCD:right_hp_dictionary[LQCD],
-	UQCR:right_hp_dictionary[UQCL],
-	RQCU:right_hp_dictionary[LQCU],}
-@onready var all_special_motions: Dictionary[Array,Dictionary] = {
-	[false,LK]: left_lk_dictionary,
-	[true,LK]: right_lk_dictionary,
-	[false,LP]: left_lp_dictionary,
-	[true,LP]: right_lp_dictionary,
-	
-	[false,HK]: left_hk_dictionary,
-	[true,HK]: right_hk_dictionary,
-	[false,HP]: left_hp_dictionary,
-	[true,HP]: right_hp_dictionary
-	}
+@onready var heavy_kick_specials: Dictionary[Array,Attack] = {
+	#ground right quarter circle
+	[true,true,DQCR,HK]: down_quarter_circle_forward_heavy_kick,
+	[true,true,RQCD,HK]: forward_quarter_circle_down_heavy_kick,
+	[true,true,UQCR,HK]: up_quarter_circle_forward_heavy_kick,
+	[true,true,RQCU,HK]: forward_quarter_circle_up_heavy_kick,
+	[true,true,DQCL,HK]: down_quarter_circle_back_heavy_kick,
+	[true,true,LQCD,HK]: back_quarter_circle_down_heavy_kick,
+	[true,true,UQCL,HK]: up_quarter_circle_back_heavy_kick,
+	[true,true,LQCU,HK]: back_quarter_circle_up_heavy_kick,
+	#ground left quarter circle
+	[true,false,DQCL,HK]: down_quarter_circle_forward_heavy_kick,
+	[true,false,LQCD,HK]: forward_quarter_circle_down_heavy_kick,
+	[true,false,UQCL,HK]: up_quarter_circle_forward_heavy_kick,
+	[true,false,LQCU,HK]: forward_quarter_circle_up_heavy_kick,
+	[true,false,DQCR,HK]: down_quarter_circle_back_heavy_kick,
+	[true,false,RQCD,HK]: back_quarter_circle_down_heavy_kick,
+	[true,false,UQCR,HK]: up_quarter_circle_back_heavy_kick,
+	[true,false,RQCU,HK]: back_quarter_circle_up_heavy_kick}
 
-## ehhh i may need to work on this one 
-@onready var Attacks: Array[Attack] = [lp,lk,hp,hk]
+@onready var heavy_punch_specials: Dictionary[Array,Attack] = {
+	#ground right quarter circle
+	[true,true,DQCR,HP]: down_quarter_circle_forward_heavy_punch,
+	[true,true,RQCD,HP]: forward_quarter_circle_down_heavy_punch,
+	[true,true,UQCR,HP]: up_quarter_circle_forward_heavy_punch,
+	[true,true,RQCU,HP]: forward_quarter_circle_up_heavy_punch,
+	[true,true,DQCL,HP]: down_quarter_circle_back_heavy_punch,
+	[true,true,LQCD,HP]: back_quarter_circle_down_heavy_punch,
+	[true,true,UQCL,HP]: up_quarter_circle_back_heavy_punch,
+	[true,true,LQCU,HP]: back_quarter_circle_up_heavy_punch,
+	#ground left quarter circle
+	[true,false,DQCL,HP]: down_quarter_circle_forward_heavy_punch,
+	[true,false,LQCD,HP]: forward_quarter_circle_down_heavy_punch,
+	[true,false,UQCL,HP]: up_quarter_circle_forward_heavy_punch,
+	[true,false,LQCU,HP]: forward_quarter_circle_up_heavy_punch,
+	[true,false,DQCR,HP]: down_quarter_circle_back_heavy_punch,
+	[true,false,RQCD,HP]: back_quarter_circle_down_heavy_punch,
+	[true,false,UQCR,HP]: up_quarter_circle_back_heavy_punch,
+	[true,false,RQCU,HP]: back_quarter_circle_up_heavy_punch}
 
-# removes all the nulls in the nested Dictionaries for all Dictionaries
+# Organized dictionaries for priority checking
+@onready var all_specials: Dictionary[Array, Attack] = {}
+@onready var command_normals: Dictionary[Array, Attack] = {}
+@onready var neutral_normals: Dictionary[Array, Attack] = {}
+@onready var all_attacks: Dictionary[Array, Attack] = {}
+
+# removes all the nulls and filters attacks into priority categories
 func _ready():
-	for attack in Attacks:
-		if attack == null: Attacks.erase(attack)
-	#FIXME rename the keys please
-	for keys in normals.keys():
-		for key in normals[keys].keys():
-			if normals[keys][key] == null:
-				normals[keys].erase(key)
-				
-	for keys in all_special_motions.keys():
-		for key in all_special_motions[keys].keys():
-			if all_special_motions[keys][key] == null:
-				all_special_motions[keys].erase(key)
-				
-	print(all_special_motions)
+	var normals_temp: Dictionary[Array, Attack] = {}
+	
+	# Merge all normals into temp dictionary
+	normals_temp.merge(light_kick_normals)
+	normals_temp.merge(light_punch_normals)
+	normals_temp.merge(heavy_kick_normals)
+	normals_temp.merge(heavy_punch_normals)
+	
+	# Merge all specials
+	all_specials.merge(light_kick_specials)
+	all_specials.merge(light_punch_specials)
+	all_specials.merge(heavy_kick_specials)
+	all_specials.merge(heavy_punch_specials)
+	
+	# Filter normals into command_normals and neutral_normals
+	for key in normals_temp.keys():
+		if normals_temp[key] == null:
+			continue # Skip null entries
+		
+		# key[2] is the motion value
+		if key[2] == NEUTRAL:
+			neutral_normals[key] = normals_temp[key]
+		else:
+			command_normals[key] = normals_temp[key]
+	
+	# Remove nulls from specials
+	for key in all_specials.keys():
+		if all_specials[key] == null:
+			all_specials.erase(key)
+	
+	# Merge everything into all_attacks (for compatibility/debugging)
+	all_attacks.merge(all_specials)
+	all_attacks.merge(command_normals)
+	all_attacks.merge(neutral_normals)
+	
+	print("Specials: ", all_specials.size())
+	print("Command Normals: ", command_normals.size())
+	print("Neutral Normals: ", neutral_normals.size())
+	print("Total Attacks: ", all_attacks.size())
+	
 	super._ready() # behavior base
