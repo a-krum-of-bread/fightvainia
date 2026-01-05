@@ -6,13 +6,14 @@ class_name Frame extends Node2D
 ## buttions to do things
 @export_category("buttions")
 @export var add_hit_box_buttion: bool = false 
+@export var add_projectile_box_buttion: bool = false 
 @export var add_hurt_box_buttion: bool = false
 @export var toggle_visable_buttion: bool = false
 @export var fix_names_buttion: bool = false
 @export var clear_frame_button1: bool = false ## there are 2 for insurnce 
 @export var clear_frame_button2: bool = false ## there are 2 for insurnce 
 var box_shapes: Array[CollisionShape2D] ## 2 layers down in the forced structor are CollisionShape2D refrenced here
-
+@export_range(0,300) var repeat_this_frame: int = 0
 
 ## sets this frames box_shapes diabled
 func set_frame_disabled(value: bool):
@@ -47,6 +48,24 @@ func add_new_hit_box():
 	print(get_children(true))
 	print("added hit_box")
 	add_hit_box_buttion = false
+	set_frame_disabled(true)
+	
+func add_new_projectile_box(): 
+	var projectile_box: ProjectileArea = ProjectileArea.new()
+	var frame_timer: FrameTimer = FrameTimer.new()
+	add_child(projectile_box) 
+	projectile_box.add_child(frame_timer)
+	frame_timer.name = "frame timer"
+	projectile_box.timer = frame_timer
+	projectile_box.collision_layer = 0
+	projectile_box.collision_mask = 2
+	#the new frame having its probetys set
+	projectile_box.owner = get_tree().edited_scene_root
+	frame_timer.owner = get_tree().edited_scene_root
+	
+	print(get_children(true))
+	print("added projectile_box")
+	add_projectile_box_buttion = false
 	set_frame_disabled(true)
 
 ##adds hurt box to secene tree
@@ -88,6 +107,7 @@ func rename_all_boxes():
 func _physics_process(_delta):
 	if Engine.is_editor_hint():
 		if add_hit_box_buttion: add_new_hit_box()
+		if add_projectile_box_buttion: add_new_projectile_box()
 		if add_hurt_box_buttion: add_new_hurt_box()
 		if fix_names_buttion: rename_all_boxes()
 		if clear_frame_button1 and clear_frame_button2: clear_all_frames()
