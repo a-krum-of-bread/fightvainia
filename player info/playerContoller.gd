@@ -31,4 +31,6 @@ func _physics_process(_delta):
 		PrimaryHurtBoxes_component.primary_hurt_box_manager()
 	#not my function
 	move_and_slide()
-	print_rich("[color=blue][b]Hello[/b][/color] world!")
+	
+	print("player postion "+str(global_position))
+	

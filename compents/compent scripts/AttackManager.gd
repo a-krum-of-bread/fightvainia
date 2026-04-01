@@ -1,6 +1,6 @@
 ##the attack manager 
 @tool
-class_name AttackManger extends Node2D
+class_name AttackManager extends Node2D
 #tool buttions
 @export_category("buttons")
 @export var add_attack_button: bool = false ## tool buttion
@@ -12,11 +12,16 @@ class_name AttackManger extends Node2D
 @export var health: Health ## this is here to be an easy refence for child nodes see [Health]
 @export var stun_manager: StunManager ## this is here to be an easy refence for child nodes see [StunManager]
 @export var host: EntityBase ## this is here to be an easy refence for child nodes
-var tween: Tween 
 var hit_expetions: Array[EntityBase] ## prevents hitting the same thing twice with one attack 
 var current_attack: Attack
 var is_attacking: = false
 
+signal animate(is_facing_right: bool, animation_stuff: Array[AnimationResource])
+
+func start_animation(is_facing_right: bool, animation_stuff: Array[AnimationResource]):
+		animate.emit(is_facing_right,animation_stuff)
+		
+		
 ## sets the hurtboxes to link with the health compnet 
 func _ready():
 	for child in get_children():
@@ -35,60 +40,44 @@ func start_attack(an_attack: Attack):
 		current_attack=an_attack
 		an_attack.active_frame = 0
 		print(current_attack.name)
+	# if alrealy attaking and an attack is started cancel the previous attack by reseting it first
 	elif is_attacking == true:
 		is_attacking = true
 		current_attack.active_frame = 0
 		current_attack = an_attack
 		an_attack.active_frame = 0
-	animate()
-	
-func animate(): #TODO this needs to bee checked  as it dosent stop inputs yet 
-	#or actual use dispacemtnt like intedned
-	if current_attack.attack_animation.is_empty() == false:
-		print(current_attack.attack_animation[0].displacement)
-		print(current_attack.attack_animation[0].time_in_frames)
-	else: 
-		push_warning("attack has no animation")
-		return
-	
-	if host.tween:
-		host.tween.kill() # Abort the previous animation.
-	host.tween = create_tween()
 		
-	for part in current_attack.attack_animation:
-		host.tween.tween_property(host,"velocity", part.get_velocty(host.is_facing_right), 0)
-		host.tween.tween_property(host,"velocity", part.get_velocty(host.is_facing_right), part.get_time())
-		print("time: " + str(part.get_time()))
-	
-	#TODO add tween to kill moemntum using if stament
-	#host.tween.tween_property(host,"velocity", Vector2.ZERO, 0) #to kill
-	host.tween.tween_property(host,"velocity", 
-	current_attack.attack_animation[-1].get_velocty(host.is_facing_right), 0)# to keep
+	if current_attack.animation_stuff:
+		start_animation(host.is_facing_right,current_attack.animation_stuff)
 
 
-# add a check for a child that reenables the dealt damage boolen in the parent 
+
+#TODO add a check for a child that reenables the dealt damage boolen in the parent 
 ##checks is attacking varable so that it can stop or contine 
 func continue_attack():
-	if not current_attack == null:
-		# end of the attck on last frame
-		if current_attack.active_frame == current_attack.frames.size():
-			is_attacking = false 
-			hit_expetions.clear()
+	if current_attack == null:
+		push_error("attack is null")
+		return
+	# end of the attck on last frame
+	if current_attack.active_frame == current_attack.frames.size():
+		is_attacking = false 
+		hit_expetions.clear()
+		current_attack.frames[current_attack.active_frame-1].set_frame_disabled(true)
+		current_attack.active_frame = 0
+	else:
+		
+		#to diable previous frame
+		if current_attack.active_frame != 0:
 			current_attack.frames[current_attack.active_frame-1].set_frame_disabled(true)
-			current_attack.active_frame = 0
-		else:
-			
-			#to diable previous frame
-			if current_attack.active_frame!=0:
-				current_attack.frames[current_attack.active_frame-1].set_frame_disabled(true)
-			current_attack.frames[current_attack.active_frame].set_frame_disabled(false)
-			current_attack.active_frame += 1
-			
-		for node in current_attack.frames[current_attack.active_frame-1].get_children():
-			if node is ProjectileArea:
-				node.is_active = true
-				current_attack.frames[current_attack.active_frame-1].set_frame_disabled(false)
-		print(current_attack.active_frame)
+		#incremnt frame
+		current_attack.frames[current_attack.active_frame].set_frame_disabled(false)
+		current_attack.active_frame += 1
+	#projectile case
+	for node in current_attack.frames[current_attack.active_frame-1].get_children():
+		if node is ProjectileArea:
+			node.is_active = true
+			current_attack.frames[current_attack.active_frame-1].set_frame_disabled(false)
+	print(current_attack.active_frame)
 
 
 

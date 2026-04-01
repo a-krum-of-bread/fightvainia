@@ -4,4 +4,6 @@ uses a lot of tween to do the stuns all use 3 tweens or less 2 to set the speed 
 [start_stun_with_tween_function]
 calls [[HitStop]]
 
-uses [[AttackData resource]] of a [[HitBox]]
+uses [[HitBoxData resource]] of a [[HitBox]]
+
+has a way to  [[AnimationTool|animate]]

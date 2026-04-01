@@ -5,8 +5,8 @@ class_name HitBoxArea extends ActiveHitBox
 @export var add_hit_box_buttion: bool = false
 @export var fix_color_buttion: bool = false
 #TODO consider removing this?
-@onready var attack_manager: AttackManger =get_parent().get_parent().get_parent()## easy refence of the attack manager
-
+@onready var attack_manager: AttackManager = get_parent().get_parent().get_parent()## easy refence of the attack manager
+# TODO consider puting a signal here for the damage function to tell projectiles to stop when enity is his sometimes
 
 #changed from colison shape to an area so now area need to have dirent thid coded
 ## conects singals and is just to warn the hit box has no info and where 
@@ -35,8 +35,7 @@ func _ready():
 ## esantaly the fucntion to deal damage if target is valid  blocking logic contained here
 func damage(area):
 	if area is HurtBoxArea:
-		var area_host: EntityBase = area.health.host # TODO rename for claity that this is the entity that is attacked
-		var attacker: EntityBase = attack_manager.host
+		var attacked_entity: EntityBase = area.health.host 
 		#put here for renable if wanted
 		print(attack_manager.hit_expetions)
 		#prevents hiting self even if i hit somthing else
@@ -44,18 +43,18 @@ func damage(area):
 			attack_manager.hit_expetions.append(attack_manager.host)
 		# prevents self damage and hitting again
 		if (get_parent().get_children().has(area) == false 
-		and attack_manager.hit_expetions.has(area_host) == false): 
-			attack_manager.hit_expetions.append(area_host)
+		and attack_manager.hit_expetions.has(attacked_entity) == false): 
+			attack_manager.hit_expetions.append(attacked_entity)
 			#stun and damage calls are inside
 			
-			block_check(area_host, area)
+			block_check2(attacked_entity, area)
 			
 			
 ## true means blocked
-func high_low_block_check(area_host: EntityBase)-> bool:
-	if attack_data.hit_type == area_host.block_type:
+func high_low_block_check(attacked_entity: EntityBase)-> bool:
+	if attack_data.hit_type == attacked_entity.block_type:
 		return true
-	elif attack_data.hit_type != area_host.block_type:
+	elif attack_data.hit_type != attacked_entity.block_type:
 		if attack_data.hit_type == attack_data.HIT_TYPE.MID:
 			return true
 		else: return false
@@ -63,47 +62,27 @@ func high_low_block_check(area_host: EntityBase)-> bool:
 	push_error("block has done somthing that has borken it")
 	return false
 
-#TODO block check should return a true or false not decide the attack and knockback
-func block_check(area_host: EntityBase, area: HurtBoxArea):
-	var position_check = self.global_position.x
-	var attack_from_right = position_check > area_host.global_position.x
-	if area_host.is_blocking and high_low_block_check(area_host):
-		# attack from right side of area and blocking from right
-		if attack_from_right and area_host.is_facing_right == true:
-			print("was blocked")
-			area.stun_manager.start_stun_with_tween(attack_data,Vector2(-1,1), true)
-
-		# attack from left side of area and blocking from left
-		elif not attack_from_right and area_host.is_facing_right == false:
-			print("was blocked")
-			area.stun_manager.start_stun_with_tween(attack_data,Vector2(1,1), true)
-				
-		else:
-			# attack from left side of area and blocking from right
-			if not attack_from_right:
-				area.health.change_health(attack_data.damage)
-				area.stun_manager.start_stun_with_tween(attack_data,Vector2(1,1), false)
-				print(area.health.current_health)
-
-			# attack from right side of area and blocking from left
-			elif attack_from_right:
-				area.health.change_health(attack_data.damage)
-				area.stun_manager.start_stun_with_tween(attack_data,Vector2(-1,1), false)
-				print(area.health.current_health)
-	else:
-		if attack_from_right:
-			area.health.change_health(attack_data.damage)
-			area.stun_manager.start_stun_with_tween(attack_data,Vector2(-1,1), false)
-			print(area.health.current_health)
-
-		elif not attack_from_right:
-			area.health.change_health(attack_data.damage)
-			area.stun_manager.start_stun_with_tween(attack_data,Vector2(1,1), false)
-			print(area.health.current_health)
-
-# change helth apply knockback on hit / on block
-
-
+func block_check2(attacked_entity: EntityBase, area: HurtBoxArea):
+	
+	var position_check: float = self.global_position.x # if self .get parent then it would be based off of the player posion not the fire ball directon regarding the pro8jectile case 
+	#var is facing right
+	var attack_from_right: bool = position_check > attacked_entity.global_position.x
+	var high_low_check: bool = high_low_block_check(attacked_entity)
+	var is_blocking: bool = attacked_entity.is_blocking
+	var bit_index = (int(is_blocking) <<3 ) |(int(high_low_check) << 2) | (int(attacked_entity.is_facing_right) << 1) | int(attack_from_right)
+	var block_check_look_up: Array[bool] = [
+		false, false, false, false,false, false, false, false,# not blocking
+		false, false, false, false,# blocking but highlow fails
+		true,  false, false, true] # if accteced entity is facing right and attack_from_right are the same
+	
+	var vector_direction: Vector2
+	if attack_from_right: vector_direction = Vector2.UP+Vector2.LEFT
+	elif attack_from_right==false: vector_direction = Vector2.UP+Vector2.RIGHT
+	else: push_error("blocking is broken")
+	
+	area.health.change_health(attack_data.damage)
+	area.stun_manager.start_stun_with_tween(attack_data,vector_direction, block_check_look_up[bit_index])
+	print(area.health.current_health)
 
 
 

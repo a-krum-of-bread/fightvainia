@@ -20,15 +20,19 @@ enum attack_pad {LK=12,HK=16,EXK=13,LP=14,HP=18,EXP=17,LPK=11,HPK=19}
 @export var start_frame: int
 @export var end_frame: int
 var can_combo: = false
-@export_category("tweens")
-@export var attack_animation: Array[AttackAnimationPart]
+@export_category("tweens stuff")
+@export var kill_momnetum_of_tween: bool  = false
+@export var animation_stuff: Array[AnimationResource]
+
 
 ## these propertys are here for easy refence for the child and parent nodes 
 ## for there respective puropus 
-
-
-var frames: Array[Frame] ## the list of frames as childern
+var attack_manager: AttackManager = self.get_parent()
+var frames: Array[Frame] ## the list of frames as childern with duplicates for full attack length. 
 var active_frame: int = 0 ## tracks the active frame
+
+
+
 
 # combo attack will come out the frame after the start frame at the earleist 
 # and at the latest right after the end frame
@@ -52,6 +56,8 @@ func _ready():
 	frames.clear()
 	for frame in get_children():
 		if frame is Frame:
+			for i in frame.repeat_this_frame:
+				frames.append(frame)
 			frames.append(frame)
 
 ##adds a new frame as a child of this node of classs Frame
@@ -64,6 +70,7 @@ func add_new_end_frame():
 	print("added end frame")
 	add_end_frame_button = false
 	_ready()
+	
 
 ## clears all frames (childeren)
 func clear_all_frames():
@@ -72,37 +79,39 @@ func clear_all_frames():
 			remove_child(child)
 	clear_frames_button1 = false
 	clear_frames_button2 = false
-#TODO  make this line and others like it more readable get_parent().get_children():
-##sets diabled values of the boxes to true for all frames
+	
+
+##sets diabled values of the boxes to true for all frames of all attacks
 func reset_all_frames_boxes():
-	for attacks in get_parent().get_children():
+	for attacks in attack_manager.get_children():
 		for frame in attacks.get_children():
 			for shape in frame.box_shapes:
 				shape.disabled = true
 
 
 ##renames all frame so that each has a number 
-func rename_all_frames():
-	for frame in frames:
-		var count: int = 1
+func rename_frames():
+	var count: int = 1
+	fix_names_buttion = false
+	for frame in get_children():
 		frame.name = "frame # " + str(count)
 		count+=1
-		
-	for frame in frames:
-		move_child(frame, frame.name.to_int()-1)
-		
-	fix_names_buttion = false
 	
+	count = 1
+	for frame in get_children():
+		move_child(frame, frame.name.to_int()-1)
+		frame.name = "frame # " + str(count) + "-" +str(count+(frame.repeat_this_frame))
+		count = count + 1 + frame.repeat_this_frame
+
 # main place to call functions here 
 func _physics_process(_delta):
 	if Engine.is_editor_hint():
 		if add_end_frame_button: add_new_end_frame() 
 		if clear_frames_button1 and clear_frames_button2: clear_all_frames()
-		if fix_names_buttion: rename_all_frames()
+		if fix_names_buttion: rename_frames()
 		if reset_visable_disabled_buttion: 
 			reset_all_frames_boxes()
 			reset_visable_disabled_buttion = false
 	else:
 		if is_combo_attack:
 			set_can_combo()
-		pass

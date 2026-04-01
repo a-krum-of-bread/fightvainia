@@ -1,6 +1,5 @@
 ## a base class for anthing that will move like player, enemys, (npc, chects, etc could be interactable insteds)
 class_name EntityBase extends CharacterBody2D
-var is_attacking: bool = false 
 @export var is_facing_right: bool = true ## holds the direction the Entity is facing
 @export var is_blocking: bool = false
 @export var stun_manager: StunManager

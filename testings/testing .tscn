@@ -2,13 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://dxxtu2redxtmm" path="res://icon.svg" id="2_dpgs8"]
 [ext_resource type="PackedScene" uid="uid://prngvo6ycayf" path="res://player info/test player.tscn" id="3_dpgs8"]
+[ext_resource type="Script" uid="uid://drwwnb3mytfxs" path="res://player info/test_enity.gd" id="4_7li3v"]
 [ext_resource type="Script" uid="uid://cses1qk0s7kii" path="res://base classes/ActiveHitBox.gd" id="5_7li3v"]
 [ext_resource type="PackedScene" uid="uid://cca8fe1qvcnch" path="res://player info/hurtable player.tscn" id="5_ta6pw"]
 [ext_resource type="Script" uid="uid://c8e0lbybahcxv" path="res://resources/hitbox data resouce.gd" id="6_m8ujk"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qf8ct"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_skp6w"]
 
 [sub_resource type="Resource" id="Resource_7li3v"]
 script = ExtResource("6_m8ujk")
@@ -44,15 +43,9 @@ position = Vector2(32, 0)
 collision_layer = 2
 collision_mask = 3
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(88, 0)
-shape = SubResource("CapsuleShape2D_skp6w")
-
 [node name="hurt able" parent="." instance=ExtResource("5_ta6pw")]
 position = Vector2(-80, -56)
+script = ExtResource("4_7li3v")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0

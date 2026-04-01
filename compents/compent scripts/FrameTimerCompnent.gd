@@ -13,6 +13,9 @@ func is_stoped() -> bool:
 	if frames_left == 0: return true
 	return false
 
+func reset():
+		frames_left = 0
+		running = false
 ##process is process (6) 
 ##counts doen timer 
 func _process(_delta):
