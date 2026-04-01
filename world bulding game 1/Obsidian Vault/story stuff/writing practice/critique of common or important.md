@@ -1,4 +1,0 @@
-- search fictional names to make sure to not accidentally be racist 
-- Usual critiques, hammer, hpelling, hunctuation?
-- use thesaurus 
-- pay attention to the tense used

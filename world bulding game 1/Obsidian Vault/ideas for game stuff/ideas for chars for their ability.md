@@ -7,6 +7,9 @@ multi weapon
 multi element 1 per button for specials 
 char similar to the maids form melty blood for having single character and duel swap able 
 katsune
+math MC Escher 
+	complex math in art (could be part of bread) 
+	math man pi e and waves
 dark souls boss (knight)
 	just to be funny give them a full screen super that is way faster then the rest of their moves and almost a jump scare 
 grey matter (bot amalgamation)
@@ -30,18 +33,20 @@ adventures party should be very very very technical but very rewarding for time 
 	mage/ healer - ranged attacks good for zoning and can provide some healing 
 
 	an implwmetion may be to use quarter circles  to be from char to char so forward would be tank back would be suport up would be mage down would be dps or somthing 
-	
 trapper 
 non active projectile for cancel ability like Celeste Crystals 
-math man pi e and waves
-skater 
-war person maybe tanya the evil or simialr
+
+skater .
+	big hit-boxes can come form movement Rather than from for the hit box being big and this can be the skill expression i could also take the player velocity into the damage calcuations with base damage being simple dash as a base line to standardize the damages this can also play in to a hit and run character style of game play
+war person maybe Tanya the evil or similar
 magic mage witch wizard and them
 	fire witch( for game 1):
 		fire ball (chargeable like Akuma)
 		flame imbued attacks
 		explosive area 
 		explosive jump
+	drawing mage
+		the motion inputs are drawings for spells and the larger more powerful ones require drawing well and fast
 take char form other games that aren't fighting games and make an interpenetration 
 	path to nowhere chars or other games of my intrest
 		Eve - could be a puppeteer with summons or the adventures party like teddy tank, cuckoo clock mage, chicken rush down, snow ball and gun man magic and eve as the healer/ support 
@@ -60,8 +65,17 @@ gluttony
 	stat buffs when eating food and minor heal its just if the char is written as one this can be a move or add on to moves as well as using cooking utensils 
 the test 
 	make my own but without any direction then i can turn them into a char what is the original char in the fighting game but with a few adjustments or more moves have bread introduce them
-
-
+elemental gunner
+	bullets that hit the player have different stats and launch trajectory based on what is used for examples
+	 ice freeze in place with a fall
+	explosive has very strong push back and launch 
+	 plants can cause organic trajectory or swinging 
+	 lighting can freeze in air 
+	 delay it shoots after a delay or repeats after a bit
+	 regular bullets fully automatic machine gun for some continual stun 
+	 make them have limited of these and reloading make you lose total ammo
+	 ammo swap / revolver wheel for the special ammo so the player can try to select but needs to manage it
+	  
 
 
 

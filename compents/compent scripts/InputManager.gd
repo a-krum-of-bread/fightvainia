@@ -282,6 +282,7 @@ func get_attack_button() -> int:
 		elif Input.is_action_just_pressed("HK"): return HK
 	return 0
 
+#TODO FIXME de nest this funtion by turing interal code into a funtion 
 ## choses what attack is to be used based on player state and the most recent sequenc
 ## howver ther is a workaround where a sequence must be at least 3 inputs otherwize
 ## the prioraity is not the first attack but is intseat the first in the dictionary  

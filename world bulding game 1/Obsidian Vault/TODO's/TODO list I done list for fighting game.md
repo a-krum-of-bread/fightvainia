@@ -97,5 +97,5 @@ are all normal cancel-able ?
 - [ ] make a scope limit 
 - [ ] make a danger zone section 
 - [ ] learn conditional editor tools or separate projectile animation and entity animation
-- [ ] 
+- [ ] decide on state based movement or fluid movement 
 - [ ] make a demo (limits: 1 char 1-3 basic enemy 1 boss that is the same char and a bit of ability to unlock and put it on itch if you use boxes then do it see [[Demo scope ToDo for summer test release of a char|demo scope]] 
