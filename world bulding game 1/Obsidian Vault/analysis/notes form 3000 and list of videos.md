@@ -2,8 +2,8 @@
 apps to try 
 figma or vasilsy to make apps
 
-experiance the problem
-
+experience the problem
+facade experiment 1 of the game have some one play a different fighting game but I give them a set of tutorial instructions instead of the games instructions or with some of the games instructions 
 sysmptons of the problem 
 	modern conorls 
 	fighing games are hard 
@@ -35,6 +35,7 @@ interview who just ask them if they say no thats ok i could just use some vids t
 what are posiel insights that i curently may see
 fighting game input is not built to be intuitive for new players but for pr-existing players
 fighting games throw players into the deep end first
+fighting game tutorials and single player modes are bad and bad
 
 
 youtube links to look at
@@ -64,9 +65,9 @@ youtube links to look at
 	https://youtu.be/B_DBsvsg6Jo?si=COLrjUo9RifXE_z3
 	an article summary  with link to the articale that may be broken below but seems fine on computer
 	https://cthor.me/Fighting-games-product-design
-	anotehr vid on the articale
+	anotehr vid on the article
 	https://youtu.be/qqR63MQV8ZQ?si=052DmD-YO0pire3R
-	sayjam on the articale
+	sayjam on the article
 	https://youtu.be/CGAAacAbzkk?si=oTztZg63y_4NbszO
 	maximulium talks in response to the articale 
 	https://youtu.be/gVvEdfNu4ok?si=9YeoAA6vdyS0jVXh
@@ -74,10 +75,12 @@ youtube links to look at
 	https://youtu.be/2Bi8-_DM2gg?si=LL4LPWZoWZcFdV-N
 	this person didnt add much for me 
 	https://youtu.be/fDhFmhUYe7k?si=el5pfR4j1M7vkB-G
-	2 people back and forth on the article gave that the training tools need more presets. it also needs to have more presets from the devs like block mix up practice. frame trap situations see [[Events or alternate game modes]] 
+	2 people back and forth on the article gave that the training tools need more presets. it also needs to have more presets from the devs like block mix up practice. frame trap situations 
+	see [[Events or alternate game modes]] 
 	function of a character is not likely to be important to new players its who looks cool
 	movement options for more experienced players may care a bit more
-	
+	https://youtu.be/sD4-lmL4Svk?si=Nj04YkJatTka74Jk
+	brian_f and idom on the article the stuff around the game play matters for new players more like other game modes fighting games are adventure. there is already lots of fps games and people have the experience built up so they need more story modes. good fun and stuff. example minimum 7 hit combo to break the armor. this is a genre problem. we need to teach the game (unwilling to learn vs its not fun to learn). current games don't translate the mechanics into the game play and they need synergy.
 	
 	
 - why dead lock is actualy EASIER than fighting games
@@ -100,7 +103,7 @@ youtube links to look at
 - Fighting Games Are NOT Products. (Internalized Marketing) by (the electric underground)
 	https://youtu.be/gYEJQ6Hj600?si=Kv7H2RYsCQd25zzD
     *section* 
-	it may be a counter example or a diffrent nuance video
+	it may be a counter example or a different nuance video
     *fighting games are an art form*
 	    the question what is the point of fighting games may need to stay in the marketing department and not the marketing team in design finish then market it
 	    so then what is the core values of fighting games 
@@ -115,7 +118,7 @@ youtube links to look at
 	    you can bond with your oppenent with a diffrent style of bond
 	*ranked match has become a compulsive-metagame*
 	    in boxed product era rank was a match-making tool rather than a progress in a social system
-	    ranked anxisity thats engamgent stuff. 
+	    ranked anxiety that's engagement stuff. 
 	    could make the rank system based on match numbers that sperates new char and acount:
 		    new player (NP) < 150 matches 
 		    geting started (GS) 50-200
@@ -169,23 +172,55 @@ youtube links to look at
         make match ups matter a lot maybe
         failure defines people not success and failure is dynamic not static like success
     *deapth feture 3: imperfict tools that will fail*
-         in orginal starfox you can get 100% but in another game its nearly imposible to get perfict score so how close can you get
-         once a speedrun game is solved it is dead
-         perfict tools that self perpetuate dont have as much depth 
-         for example vampire surviores eventualy gets there when you have enugh and then eventualy the eniments dont matter
-         so try to add tools that contridict add fiction
+         in original star fox you can get 100% but in another game its nearly imposible to get perfect score so how close can you get
+         once a speed run game is solved it is dead
+         perfect tools that self perpetuate don't have as much depth 
+         for example vampire survivors eventually gets there when you have enough and then eventually the enemies don't matter
+         so try to add tools that contradict add fiction
          *devs need to CHOOSE imperfection*
-         a group just improved grpahics and kept the balnce of a game and it was good for the competitves 
+         a group just improved graphics and kept the balance of a game and it was good for the competitions 
         
-        
+trash talk vid on tekken 8 season 3
+	https://youtu.be/bl_lphUL9Dw?si=jJiazMaysmzKBCdF
+	make a during combo interaction for the defender maybe DI. mid level play is when people start to feel connected to the game longer term and having a tool to support that like drive rush in sf6 may help
+trash talk on invincible vs and rage quit culture
+	https://youtu.be/vjp4EqrEBUk?si=koZT6cK7h7bsrwx0
+	auto combo stuff if the combo comes out on whiff then it may not have a mind game or decision. so it may be better to have the auto combo be partly cancel on whiff with a punishable point. but there should be some punish able point so that spammers learn something. it may be better to develop games in expansions if i want semi live service and like character packs .
    
-	
 ## sajam play list of stuff up to 8 years ago I should watch
+video numbered some may have been watched already
     https://www.youtube.com/playlist?list=PL6Zpep0TMBYTKddT-qgPmHIfx8fQ6tMRW
+    1. if there was no bull or strong tools then it wouldn't be fun. balance the fun of the move with the frustration of being hit by it.
+    2. summon characters some have the summons that work automatically but that could be seen as frustrating to play against but control of it takes skill. theses types of charaters can force the opponent to make a decision between the point character and thew summons.
+    3. summon characters cause he frustration in a bit more of a unbalanced way. defensive play can be interesting and some people see it as not 
+    4. balance some characters so that the archetypes aren't too good glass cannons should be strong but have significant weakness and it should also take a strong player,  grapples are slow but blows you up and zoner's should blow up when you get close. a good qestion what should you do if everyone is able to be opened up except goeichi
+    5. guilty gear got simplified, some things were some things that are excessively complicated and my not make any sense to me weights. simplification is a complex process. vorpol will make players make interesting decisions and creativity. games that make players think more and can make moments where i didn't think of that. that can extend the game longer. 5 options vs defense or 100 options vs defense witch is cooler 
+    6.  in early game zoner and easy offence is strong but as it develops people get better at defense
+    7.  at high level you can pick cheep or pick fun and have fun in competitive. picking a character is a choice. weirdly tier lists are some of the best preforming content but they matter less for casuals probably because its an opinion.
+    8.  verity of games is good if it all boils down to footies and then you can play well then maybe you needed more practice. 
+    9. how to improve fighting games tutorials. the tutorials are too dense and after the tutorials makes you think you should be ready. teach the basics and tie it into unlockables. the basics i think would be block anti air a single bnb 3-5 combo using 1 special move. give repetition maybe force it. "In the beginning and be kind" "recommend attacks like anti air" "recommend pokes" example for street fighter player is chun vs zangif the game tells player to keep zangif away with heavy punch. player does that good. then zangif jumps the screen freezes then player is told zangif cant approach on the ground so natrialy he will jump so player  is promoted to anti air. now practice both. the tutorial should tell the player what to do or force them to do a few things. try to learn new games to get the feeling of what its like to be lost to know what it feels like to be a beginner again.
+    10. misconceptions of the degenerate strategies. neutral can be very degenerate because people will pick the strong stuff. if all things return to neutral then you can lose the people who want to take the offensive action like a combo reset or oki. but making it a decision instead may make more sense. some games could be made that way but not all games should. looping stuff could be. everything is nuanced
+    11. Even honest well balanced games have strong cheap stuff. if there wasn't it would be a standoff. but some of that cheap stuff needs to be tolerable. some times dlc characters are strong can be seen as pay to win. dlc is a barrier some times
+    12. laughs theory on types of fighting games. what is this? **heart** plays by feel baiting conditioning, **brains** the lab /training mode person, **body** known for physical ability like reactions and combo consistency, i could learn this theory and teach it too. its a way to categorize fighting game players
+    13. why would you feel bad about playing a strong character. there are people who don't like playing strong charters because the public may attack them. repetition of fighting the same character all the time can feel stale
+    14. the game is math, it isn't to blame if you refuse what its teaching you. you can learn by fighting an opponent 
+    15. 3 basic types of players timmy, johnny, and spike in mtg. **Timmy** sees something big and if it plays it and it can win him the game they hulk smash. plays for fun. and wants to do cool stuff and wants to land the cool stuff but does the simpler stuff. **johnny** wants to win with style and creativity. likes wining with different styles and labbing who does the twitter clip stuff. **spike** will play the best copy from the internet and always wants to win everything. and can mix with stuff. _timmy,johnny_ likes cool and creative with a bit of tech. _timmy spike_ wants to win with the biggest stuff. _spike johnny_ only wants to win on their own terms and with original characters (me feels like this ) always tweaks the best decks for their own spin. all 3 is rare big cool, tech, and competitive 
+    16. learning new chars: years help but newer pick who is cool is an option many people say a lot of thing often visuals or moves or there are combos or because of play style (i pick old man often) pick the char even if you don't think the play style matches you. pick regardless of the power level they. see some footage and see how they are played. play style and tier don't matter early. Sajam's first char was a guy that had a wrestling out fit called a singlet and a big throw tornado throw. don't play a char you don't like
+    17. Runeterra fighting games and the importance of importance of opponent interaction. most games fighting have 3 interactions to kill should it be 5 doing nothing sometime should be the right action. Don't develop the game where nothing is good. in card games action reaction is a way to design
+    18. motion inputs discussion 1 without motion inputs the design decisions changes extremely. the types of moves are now narrower examples slower moves auto lose to invincible dp or full screen fast supers narrow the game down. what is a numeraical value to balance a move for motions and just frame data what is the conversion 1 direction = 2-4 frames? getting in if its hard should be from player skill
+    19. uneven match ups are in games are inevitable in games with diverse character archetypes. that fine. zoner vs close range grappler the zoner should win more often that's normal. the zoner should also struggle against a rush down. there should be trouble. In competition you should have a back up for your weak match ups 
+    20. good presentation will get people to watch a game they don't understand at all. make the game look cool before you understand. good visuals, the style of the game, the hit noises, memorable sounds, good impact, lots of personality, sound examples i can think of outside of fighting games metal gear snake death and spotted sounds. solo leveling has great animation but not as fundamentally interesting story op mc is hard to write. what i may want to do for some of the characters is give them very unique sounding specials lighting could sound with a buzz. metal pipe sound is unique. animations should have impact. guilty gear counter is very impact full
+    21. memorization and reactions: more fighting game misconceptions to some fighting games are too fast (could include a game speed setting in training modes) the reactions often aren't about blocking an attack its about what to do after it is blocked and the decision that it comes after. high level players always can learn new things.
+    22. the core of fighting games: how do you deal with throws. strikes and throws. if no offence is all react-able defense till the end of time. even in games with strong offence where throws aren't needed then throws are strong. in some guiltily gear throw there is 1 frame defensive throws, in mortal combat throws are considered high. throws exist to interrupt the flow of battle. looking at throws you can learn the games understanding 
+    23. developer communications is super important for shaping conversation around the game. talk with the community some what about future things to get opinion and foresee how to change things. you shape what people talk about as a dev. 
+    24. comeback mechanics can create interesting strategy and design decisions (except x factor). it can add a lot more interesting ways to play or interact a bunch of examples mentioned. both players should be able to use them and they should add to games. you should carry win conditions 
+    25. movement options define how you play the game (analyzing the new core-A video). the Korean back dash and emergent game play. philosophy of movement can make you change the way people play the game and can change how the game flows. so if i give characters with very different movement they will play very differently. the really good movement in games like rocket league. moving fast isn't always the right option 
+    26.  what separates the fighting game jedi from the rest. (meme graph) in the beginning/left your just mashing. in the middle players learn the fgc stuff like oki, frame data, setups and more, on the right of that you start having the muscle memory and doesn't need to think as much
+    27. zoning is cool and offence after a knockdown isn't what defines "rushdown". archetypes exist watch again
 
 
 
-need to also make dirent lengths of guide
+need to also make direct lengths of guide
 should make a table catagoizing figting games by method of teaching players 
 i need to ask non figting game people 
 look at platform fighter people

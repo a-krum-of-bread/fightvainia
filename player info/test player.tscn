@@ -117,7 +117,7 @@ point_count = 2
 script = ExtResource("19_6he74")
 smoothing_curve_x = SubResource("Curve_6eorl")
 smoothing_curve_y = SubResource("Curve_p2dg5")
-displacement = Vector2(300, 0)
+displacement = Vector2(100, 0)
 metadata/_custom_type_script = "uid://sx7qv8babvbw"
 
 [sub_resource type="Curve" id="Curve_gqyel"]
@@ -132,7 +132,7 @@ point_count = 2
 script = ExtResource("19_6he74")
 smoothing_curve_x = SubResource("Curve_gqyel")
 smoothing_curve_y = SubResource("Curve_7d36n")
-displacement = Vector2(0, -300)
+displacement = Vector2(0, -100)
 metadata/_custom_type_script = "uid://sx7qv8babvbw"
 
 [sub_resource type="Resource" id="Resource_7y7to"]
@@ -529,7 +529,7 @@ disabled = true
 debug_color = Color(1, 0, 0, 0.686275)
 
 [node name="dqcflk special" type="Node2D" parent="folder/attack manager" unique_id=291329986]
-position = Vector2(4, 0)
+position = Vector2(14, 0)
 script = ExtResource("4_coedu")
 animation_stuff = Array[ExtResource("19_6he74")]([SubResource("Resource_valns"), SubResource("Resource_jxblt")])
 
@@ -546,7 +546,7 @@ script = ExtResource("9_an3v2")
 attack_data = SubResource("Resource_7y7to")
 
 [node name="hit_box" type="CollisionShape2D" parent="folder/attack manager/dqcflk special/frame # 2-6/hit_box # 0" unique_id=1470784610]
-position = Vector2(8, -8)
+position = Vector2(2, -8)
 shape = SubResource("RectangleShape2D_2bl5q")
 disabled = true
 debug_color = Color(1, 0, 0, 0.686275)

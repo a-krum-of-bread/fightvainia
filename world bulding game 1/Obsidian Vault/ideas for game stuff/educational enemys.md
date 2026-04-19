@@ -31,6 +31,12 @@ block and walk
 must be combed 
 	you must do a full large combo in order to deal damage to the opponent where when they drop it the combo must be done form start 
 
+move to safe spot during combo
+	player hits AI then full screen lazer is signaled then they player must combo to a safe zone then when combo ends it fires
+
+flying bird 
+	needs to be hit out of air and is perfict for a meaty setup 
+
 character lockout 
 	some character may be taken out during a boss fight or are too afraid to do some things in the fight because of fear or environment 
 	for example mages cant really fight in an anti magic area or some chars may have been taken out or trapped by the environment like floor traps pit falls etc
@@ -38,3 +44,9 @@ character lockout
 
 
 
+## random enemies 
+blindness
+bullet hell or a supper
+bouncing bullets that don't dispersal 
+confusion stats
+portal attackers that have infinite dimensions

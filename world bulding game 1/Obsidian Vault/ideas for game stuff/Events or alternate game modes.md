@@ -31,7 +31,11 @@ definitely a **rouge-like** but how would it be balanced without losing or incre
 		3rd last 5-5 or mirror
 		4th las 6-4 that should be it i think i don't want it to be too weak
 		5th elite IAI
-
+a hunting mode
+protect the king/ king of the hill 
+hack and slash
+timed escape 
+**morph mode** see brawllhalla for refencie
 
 ranked - it is an expectation of people would they expect it of an indie
 lab rats mode cool combos
@@ -41,3 +45,9 @@ hardest difficulty where they input read and you are required to punish doge etc
 survival mode (repeated IAI 1 hp bar maybe a small heal)
 tekken ghost battle
 character customization outfits reason (roblox dress to impress)
+
+make motion inputs a form of progression in multiplayer and each move unlocks via completing a quest with each char or by discovery of the move or other game modes
+
+elemtial reactions
+
+a air movment / combo practic thing where you practice hitting targets that are the end traectorys of a real combo 

@@ -35,8 +35,7 @@ adventures party should be very very very technical but very rewarding for time 
 	an implwmetion may be to use quarter circles  to be from char to char so forward would be tank back would be suport up would be mage down would be dps or somthing 
 trapper 
 non active projectile for cancel ability like Celeste Crystals 
-
-skater .
+skater 
 	big hit-boxes can come form movement Rather than from for the hit box being big and this can be the skill expression i could also take the player velocity into the damage calcuations with base damage being simple dash as a base line to standardize the damages this can also play in to a hit and run character style of game play
 war person maybe Tanya the evil or similar
 magic mage witch wizard and them
@@ -75,8 +74,46 @@ elemental gunner
 	 regular bullets fully automatic machine gun for some continual stun 
 	 make them have limited of these and reloading make you lose total ammo
 	 ammo swap / revolver wheel for the special ammo so the player can try to select but needs to manage it
-	  
-
-
-
+slow down stuff 
+portal gels 
+meduca
+maid
+doctor
+quest based 
+a bee character
+weather efects like anng (avatar) or storm x men
+zelda kukos
+reverse damage scaling 
+some gambling thing
+meteor hammer
+gravity change
+feint
+mirage 
+	make clones of both players and and they move automatically but since they players control they can tell what is real on their end but not the other and after a bit it happens again if its known
+a char that swims in the air
+instrument/ music that can be played
+jjk todo clap teleport instead tag ability
+quick time events in 1v1
+stance 
+flow chart character 
+secert agent
+	batton main attack 
+	fire/explosion 1 attack button, 
+	ice bullet / platforming tools on block button, ice block  on block button
+	electrical tools / gadgets floor trap, grappling hook, tasers, position teleport watch/ dash and upgrade
+	5 levels for game
+master chef that combos you while cooking a meal on the side
+	some combo routes heal or some other benefit could make salad, bake cookies, make pasta or noodles, sandwich, smoothie, nachos, dipping sauce, some could require super a move to eat current/ throw the unfinished food or it could be levels of how well made the meal is
+	full mimics in general
+		they should have some kind of small buff for learning all characters and an interesting balance decision  
+		give guaranteed 4-6 match up or 3-7 match up for play testing purposes/ player choice of disadvantage
+		give guaranteed 6-4 match up 
+		give one additional move
+		make the mimic move set locked behind what the opponent uses (they can only mimic what they see/ is used) gives very interesting decision for the players
+		immunity to something small like chip damage? or is chip a big thing
+		change mimic per round
+		random char
+		shape shiftier with own move set as well
+		amalgamation combo of some chars moves at random 
+		 
 
