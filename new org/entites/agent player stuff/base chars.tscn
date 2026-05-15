@@ -58,7 +58,10 @@ host = NodePath("../../..")
 
 [node name="movement" type="Node" parent="folder/movement folder" unique_id=538386796 node_paths=PackedStringArray("timer", "host")]
 script = ExtResource("6_e1a3v")
+prejump_frames = null
 timer = NodePath("prejump delay")
+jump_velocityY = null
+move_speed = null
 enabled = true
 host = NodePath("../../..")
 

@@ -1,6 +1,5 @@
 ## holds all the main movemnt opptions may want to splitit up into separte compents
 class_name Movement extends BehaviourBase
-@export var prejump_frames: int = 4 ##prejump delay
 @export var timer: FrameTimer ## the timer fro prejumping 
 @export var jump_velocityY: float = -2400 ## vertacial jump speed value 
 @export var move_speed: float = 200 ## horazontall speed value
